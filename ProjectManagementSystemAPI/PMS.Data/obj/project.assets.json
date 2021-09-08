@@ -1,11 +1,48 @@
 {
   "version": 3,
   "targets": {
-    "net5.0": {}
+    "net5.0": {
+      "PMS.Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "compile": {
+          "bin/placeholder/PMS.Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/PMS.Common.dll": {}
+        }
+      },
+      "PMS.Entities/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "PMS.Common": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/PMS.Entities.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/PMS.Entities.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "PMS.Common/1.0.0": {
+      "type": "project",
+      "path": "../PMS.Common/PMS.Common.csproj",
+      "msbuildProject": "../PMS.Common/PMS.Common.csproj"
+    },
+    "PMS.Entities/1.0.0": {
+      "type": "project",
+      "path": "../PMS.Entities/PMS.Entities.csproj",
+      "msbuildProject": "../PMS.Entities/PMS.Entities.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net5.0": []
+    "net5.0": [
+      "PMS.Entities >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\Abolfazl\\.nuget\\packages\\": {},
@@ -37,7 +74,11 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "D:\\Programming\\Projects\\GitHubRepositories\\Project-Jump-API\\ProjectManagementSystemAPI\\PMS.Entities\\PMS.Entities.csproj": {
+              "projectPath": "D:\\Programming\\Projects\\GitHubRepositories\\Project-Jump-API\\ProjectManagementSystemAPI\\PMS.Entities\\PMS.Entities.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

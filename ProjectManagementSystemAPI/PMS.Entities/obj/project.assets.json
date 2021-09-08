@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net5.0": {}
+    "net5.0": {
+      "PMS.Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "compile": {
+          "bin/placeholder/PMS.Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/PMS.Common.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "PMS.Common/1.0.0": {
+      "type": "project",
+      "path": "../PMS.Common/PMS.Common.csproj",
+      "msbuildProject": "../PMS.Common/PMS.Common.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net5.0": []
+    "net5.0": [
+      "PMS.Common >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\Abolfazl\\.nuget\\packages\\": {},
@@ -37,7 +56,11 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "D:\\Programming\\Projects\\GitHubRepositories\\Project-Jump-API\\ProjectManagementSystemAPI\\PMS.Common\\PMS.Common.csproj": {
+              "projectPath": "D:\\Programming\\Projects\\GitHubRepositories\\Project-Jump-API\\ProjectManagementSystemAPI\\PMS.Common\\PMS.Common.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
