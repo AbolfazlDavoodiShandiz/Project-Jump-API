@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "PMS.Entities/1.0.0": {
+        "dependencies": {
+          "PMS.Common": "1.0.0"
+        },
+        "runtime": {
+          "PMS.Entities.dll": {}
+        }
+      },
+      "PMS.Common/1.0.0": {
+        "runtime": {
+          "PMS.Common.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "PMS.Entities/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "PMS.Common/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

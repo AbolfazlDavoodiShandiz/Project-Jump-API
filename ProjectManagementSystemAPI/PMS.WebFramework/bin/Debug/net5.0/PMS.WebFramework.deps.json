@@ -1,0 +1,75 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "PMS.WebFramework/1.0.0": {
+        "dependencies": {
+          "PMS.Services": "1.0.0"
+        },
+        "runtime": {
+          "PMS.WebFramework.dll": {}
+        }
+      },
+      "PMS.Common/1.0.0": {
+        "runtime": {
+          "PMS.Common.dll": {}
+        }
+      },
+      "PMS.Data/1.0.0": {
+        "dependencies": {
+          "PMS.Entities": "1.0.0"
+        },
+        "runtime": {
+          "PMS.Data.dll": {}
+        }
+      },
+      "PMS.Entities/1.0.0": {
+        "dependencies": {
+          "PMS.Common": "1.0.0"
+        },
+        "runtime": {
+          "PMS.Entities.dll": {}
+        }
+      },
+      "PMS.Services/1.0.0": {
+        "dependencies": {
+          "PMS.Data": "1.0.0"
+        },
+        "runtime": {
+          "PMS.Services.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "PMS.WebFramework/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "PMS.Common/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "PMS.Data/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "PMS.Entities/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "PMS.Services/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
