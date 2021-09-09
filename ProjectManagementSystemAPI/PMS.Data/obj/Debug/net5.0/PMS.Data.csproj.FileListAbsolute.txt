@@ -15,3 +15,6 @@ D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSys
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Data\obj\Debug\net5.0\PMS.Data.dll
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Data\obj\Debug\net5.0\ref\PMS.Data.dll
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Data\obj\Debug\net5.0\PMS.Data.pdb
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Data\bin\Debug\net5.0\PMS.Data.runtimeconfig.json
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Data\bin\Debug\net5.0\PMS.Data.runtimeconfig.dev.json
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Data\obj\Debug\net5.0\PMS.Data.genruntimeconfig.cache

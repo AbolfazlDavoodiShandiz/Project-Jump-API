@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PMS.Entities
 {
-    internal interface IDbEntity
+    public interface IDbEntity
     {
         //This interface specifies database entities
     }
