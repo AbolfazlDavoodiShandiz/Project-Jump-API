@@ -29,6 +29,8 @@ namespace PMS.WebAPI.Controllers
         [ActionName("GetAll")]
         public async Task<ApiResult<IEnumerable<ProjectDTO>>> GetAll(CancellationToken cancellationToken)
         {
+            throw new Exception("Error has occured!");
+
             var list = await _projectService.GetAll();
 
             if (list is not null && list.Count() > 0)

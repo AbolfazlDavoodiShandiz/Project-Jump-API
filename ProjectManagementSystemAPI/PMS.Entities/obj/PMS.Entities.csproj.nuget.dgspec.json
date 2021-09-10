@@ -108,6 +108,10 @@
               "target": "Package",
               "version": "[5.0.9, )"
             },
+            "Microsoft.Extensions.Identity.Stores": {
+              "target": "Package",
+              "version": "[5.0.9, )"
+            },
             "Pluralize.NET": {
               "target": "Package",
               "version": "[1.0.2, )"
