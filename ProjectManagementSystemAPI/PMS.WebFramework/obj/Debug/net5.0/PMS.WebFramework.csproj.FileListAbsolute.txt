@@ -19,3 +19,5 @@ D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSys
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.WebFramework\obj\Debug\net5.0\PMS.WebFramework.dll
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.WebFramework\obj\Debug\net5.0\ref\PMS.WebFramework.dll
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.WebFramework\obj\Debug\net5.0\PMS.WebFramework.pdb
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.WebFramework\bin\Debug\net5.0\PMS.DTO.dll
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.WebFramework\bin\Debug\net5.0\PMS.DTO.pdb

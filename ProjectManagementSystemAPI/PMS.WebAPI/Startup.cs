@@ -8,7 +8,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using PMS.Data;
+using PMS.Data.Repositories;
+using PMS.Services;
+using PMS.Services.Implementations;
+using PMS.WebFramework.AutoMapperProfile;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +38,12 @@ namespace PMS.WebAPI
                 options.UseSqlServer(Configuration.GetConnectionString("SqlServer"));
             });
 
-            services.AddControllers();
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IProjectService, ProjectService>();
+
+            services.AddAutoMapper(config => config.AddProfile(new AutoMapperProfile()));
+
+            services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PMS.WebAPI", Version = "v1" });
@@ -43,6 +53,8 @@ namespace PMS.WebAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors("PMS");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

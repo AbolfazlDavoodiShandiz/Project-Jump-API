@@ -8,9 +8,12 @@ namespace PMS.DTO
 {
     public class ProjectDTO
     {
+        public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime CreatedDate { get; internal set; }
         public DateTime DeadlineDate { get; set; }
+
+        public IEnumerable<ProjectTaskDTO> Tasks { get; set; }
     }
 }

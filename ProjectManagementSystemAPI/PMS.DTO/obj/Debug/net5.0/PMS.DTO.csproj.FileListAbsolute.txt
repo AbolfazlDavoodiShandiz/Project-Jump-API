@@ -1,0 +1,12 @@
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.DTO\bin\Debug\net5.0\PMS.DTO.deps.json
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.DTO\bin\Debug\net5.0\PMS.DTO.dll
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.DTO\bin\Debug\net5.0\ref\PMS.DTO.dll
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.DTO\bin\Debug\net5.0\PMS.DTO.pdb
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.DTO\obj\Debug\net5.0\PMS.DTO.csproj.AssemblyReference.cache
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.DTO\obj\Debug\net5.0\PMS.DTO.GeneratedMSBuildEditorConfig.editorconfig
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.DTO\obj\Debug\net5.0\PMS.DTO.AssemblyInfoInputs.cache
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.DTO\obj\Debug\net5.0\PMS.DTO.AssemblyInfo.cs
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.DTO\obj\Debug\net5.0\PMS.DTO.csproj.CoreCompileInputs.cache
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.DTO\obj\Debug\net5.0\PMS.DTO.dll
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.DTO\obj\Debug\net5.0\ref\PMS.DTO.dll
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.DTO\obj\Debug\net5.0\PMS.DTO.pdb
