@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\ProjectManagementSystemAPI",
-    "\\ProjectManagementSystemAPI\\PMS.Entities"
+    "\\ProjectManagementSystemAPI\\PMS.Entities",
+    "\\ProjectManagementSystemAPI\\PMS.WebAPI"
   ],
-  "SelectedNode": "\\ProjectManagementSystemAPI\\PMS.Entities\\ProjectTask.cs",
+  "SelectedNode": "\\ProjectManagementSystemAPI\\PMS.WebAPI\\Startup.cs",
   "PreviewInSolutionExplorer": false
 }

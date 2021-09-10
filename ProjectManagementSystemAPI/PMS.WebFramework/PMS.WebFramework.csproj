@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PMS.DTO\PMS.DTO.csproj" />
     <ProjectReference Include="..\PMS.Services\PMS.Services.csproj" />
   </ItemGroup>
 
