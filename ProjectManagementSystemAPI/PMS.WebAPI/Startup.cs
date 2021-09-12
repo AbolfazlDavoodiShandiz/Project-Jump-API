@@ -17,6 +17,7 @@ using PMS.Entities;
 using PMS.Services;
 using PMS.Services.Implementations;
 using PMS.WebFramework.AutoMapperProfile;
+using PMS.WebFramework.Configurations;
 using PMS.WebFramework.CustomMiddlewares;
 using System;
 using System.Collections.Generic;
@@ -42,8 +43,10 @@ namespace PMS.WebAPI
                 options.UseSqlServer(Configuration.GetConnectionString("SqlServer"));
             });
 
+            services.Configure<SiteSettings>(Configuration.GetSection(nameof(SiteSettings)));
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IProjectService, ProjectService>();
+            services.AddScoped<IJwtServices, JwtServices>();
 
             services.AddAutoMapper(config => config.AddProfile(new AutoMapperProfile()));
 
@@ -62,6 +65,7 @@ namespace PMS.WebAPI
                  options.User.RequireUniqueEmail = siteSettings.IdentitySettings.UserRequireUniqueEmail;
              })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddErrorDescriber<CustomIdentityErrorDescriber>()
                 .AddDefaultTokenProviders();
 
             services.AddSwaggerGen(c =>

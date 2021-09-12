@@ -9,8 +9,6 @@ namespace PMS.Common.Enums
     public enum ApiResponseStatus
     {
         Success = 1,
-        BadRequest = 2,
-        NotFound = 3,
-        ServerError = 4
+        Failure = 0,
     }
 }

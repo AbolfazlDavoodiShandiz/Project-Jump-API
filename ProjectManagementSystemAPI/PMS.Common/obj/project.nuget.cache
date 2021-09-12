@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "H+a5PkUeIiGbrokMgKT2GV1Q+4Er90+ECMWMBoTedjY9GeKAlQ2Mu4ySTUWrQdJgzvmwbpg+NEObpUTw4d8M0A==",
+  "dgSpecHash": "dEMLMQ1wP2Z+ehfPfRqjEjivmhLxwyykDSRGelr9pHt3F8bc2MEUbmNjHfjBF9uAWJxDWYnD4XFcTSIAvCtOgg==",
   "success": true,
   "projectFilePath": "D:\\Programming\\Projects\\GitHubRepositories\\Project-Jump-API\\ProjectManagementSystemAPI\\PMS.Common\\PMS.Common.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Abolfazl\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+  ],
   "logs": []
 }

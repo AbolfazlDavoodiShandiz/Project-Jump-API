@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "yv0J1V0DMyUmt6zgALNk4IjPEZ3XoW8PuKFky2Nt8UBtJYcoBUOiJstg3szcid5p+wK/Vra0TK/aRGsqNeAufA==",
+  "dgSpecHash": "Fn9QWoACH1KEMqH7hF+dpc+Mzai3ufkgSC0esz0coWXhCbxbjqvhwyNqChYc/d0UawnVXDHy/ZuvFpAtIdLKGw==",
   "success": true,
   "projectFilePath": "D:\\Programming\\Projects\\GitHubRepositories\\Project-Jump-API\\ProjectManagementSystemAPI\\PMS.Entities\\PMS.Entities.csproj",
   "expectedPackageFiles": [
@@ -19,6 +19,7 @@
     "C:\\Users\\Abolfazl\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\5.0.0\\microsoft.extensions.logging.abstractions.5.0.0.nupkg.sha512",
     "C:\\Users\\Abolfazl\\.nuget\\packages\\microsoft.extensions.options\\5.0.0\\microsoft.extensions.options.5.0.0.nupkg.sha512",
     "C:\\Users\\Abolfazl\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.0\\microsoft.extensions.primitives.5.0.0.nupkg.sha512",
+    "C:\\Users\\Abolfazl\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\Abolfazl\\.nuget\\packages\\pluralize.net\\1.0.2\\pluralize.net.1.0.2.nupkg.sha512",
     "C:\\Users\\Abolfazl\\.nuget\\packages\\system.collections.immutable\\5.0.0\\system.collections.immutable.5.0.0.nupkg.sha512",
     "C:\\Users\\Abolfazl\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512",
