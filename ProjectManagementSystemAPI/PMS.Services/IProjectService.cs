@@ -6,6 +6,6 @@ namespace PMS.Services
 {
     public interface IProjectService
     {
-        Task<IEnumerable<Project>> GetAll();
+        Task<IEnumerable<Project>> GetAll(int userId);
     }
 }

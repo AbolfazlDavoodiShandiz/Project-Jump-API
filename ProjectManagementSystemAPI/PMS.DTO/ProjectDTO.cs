@@ -13,6 +13,7 @@ namespace PMS.DTO
         public string Description { get; set; }
         public DateTime CreatedDate { get; internal set; }
         public DateTime DeadlineDate { get; set; }
+        public int UserId { get; set; }
 
         public IEnumerable<ProjectTaskDTO> Tasks { get; set; }
     }

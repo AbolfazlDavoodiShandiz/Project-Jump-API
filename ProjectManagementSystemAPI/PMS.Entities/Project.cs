@@ -20,6 +20,9 @@ namespace PMS.Entities
         public DateTime CreatedDate { get; internal set; }
         public DateTime DeadlineDate { get; set; }
 
+        public User User { get; set; }
+        public int UserId { get; set; }
+
         public ICollection<ProjectTask> Tasks { get; set; }
     }
 

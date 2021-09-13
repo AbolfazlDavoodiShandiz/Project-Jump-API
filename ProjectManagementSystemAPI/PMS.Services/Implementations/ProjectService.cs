@@ -18,9 +18,9 @@ namespace PMS.Services.Implementations
             _projectRepository = projectRepository;
         }
 
-        public async Task<IEnumerable<Project>> GetAll()
+        public async Task<IEnumerable<Project>> GetAll(int userId)
         {
-            return await _projectRepository.TableNoTracking.Include(p => p.Tasks).ToListAsync();
+            return await _projectRepository.TableNoTracking.Where(p => p.UserId == userId).Include(p => p.Tasks).ToListAsync();
         }
     }
 }

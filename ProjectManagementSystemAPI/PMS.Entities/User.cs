@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,5 +21,15 @@ namespace PMS.Entities
         public bool IsActive { get; set; }
         public DateTime RegisterDate { get; set; }
         public DateTime? LastLoginDate { get; set; }
+
+        public ICollection<Project> Projects { get; set; }
+    }
+
+    public class UserConfiguration : IEntityTypeConfiguration<User>
+    {
+        public void Configure(EntityTypeBuilder<User> builder)
+        {
+            builder.HasMany(u => u.Projects).WithOne(p => p.User).HasForeignKey(p => p.UserId);
+        }
     }
 }

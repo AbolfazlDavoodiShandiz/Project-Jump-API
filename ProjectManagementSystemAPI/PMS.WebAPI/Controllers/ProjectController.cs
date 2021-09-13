@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PMS.Common.Utility;
 using PMS.DTO;
 using PMS.Services;
 using PMS.WebFramework.API;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace PMS.WebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class ProjectController : ControllerBase
     {
@@ -29,7 +30,9 @@ namespace PMS.WebAPI.Controllers
         [ActionName("GetAll")]
         public async Task<ApiResult<IEnumerable<ProjectDTO>>> GetAll(CancellationToken cancellationToken)
         {
-            var list = await _projectService.GetAll();
+            var userId = User.Identity.GetUserId();
+
+            var list = await _projectService.GetAll(userId);
 
             if (list is not null && list.Count() > 0)
             {
