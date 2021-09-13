@@ -71,6 +71,9 @@ namespace PMS.WebAPI.Controllers
 
             var token = await _jwtService.GenerateAsync(user);
 
+            user.LastLoginDate = DateTime.Now;
+            await _userManager.UpdateAsync(user);
+
             var loginResponseDTO = new LoginResponseDTO
             {
                 Username = user.UserName,
