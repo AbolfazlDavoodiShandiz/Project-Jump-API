@@ -19,11 +19,19 @@ namespace PMS.Services.Implementations
             _projectRepository = projectRepository;
         }
 
-        public async Task<bool> CreateProject(Project project, CancellationToken cancellationToken)
+        public async Task CreateProject(Project project, CancellationToken cancellationToken)
         {
-            bool result = await _projectRepository.AddAsync(project, cancellationToken);
+            await _projectRepository.AddAsync(project, cancellationToken);
+        }
 
-            return result;
+        public async Task DeleteProject(Project project, CancellationToken cancellationToken)
+        {
+            await _projectRepository.DeleteAsync(project, cancellationToken);
+        }
+
+        public async Task EditProject(Project project, CancellationToken cancellationToken)
+        {
+            await _projectRepository.UpdateAsync(project, cancellationToken);
         }
 
         public async Task<bool> ExistsByTitle(string name, CancellationToken cancellationToken)
@@ -36,6 +44,11 @@ namespace PMS.Services.Implementations
         public async Task<IEnumerable<Project>> GetAll(int userId, CancellationToken cancellationToken)
         {
             return await _projectRepository.TableNoTracking.Where(p => p.OwnerId == userId).Include(p => p.Tasks).ToListAsync(cancellationToken);
+        }
+
+        public async Task<Project> GetUserProjectById(int projectId, int userId, CancellationToken cancellationToken)
+        {
+            return await _projectRepository.TableNoTracking.Where(p => p.Id == projectId && p.OwnerId == userId).SingleOrDefaultAsync(cancellationToken);
         }
     }
 }

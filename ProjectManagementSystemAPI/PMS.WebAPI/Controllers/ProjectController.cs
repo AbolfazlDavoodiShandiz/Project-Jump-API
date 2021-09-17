@@ -62,9 +62,46 @@ namespace PMS.WebAPI.Controllers
             var project = _mapper.Map<Project>(projectRegistrationDTO);
             project.OwnerId = userId;
 
-            var result = await _projectService.CreateProject(project, cancellationToken);
+            await _projectService.CreateProject(project, cancellationToken);
 
             return new ApiResult(true, ApiResponseStatus.Success, HttpStatusCode.OK, "Project created successfully.");
+        }
+
+        [HttpPost]
+        [ActionName("EditProject")]
+        public async Task<ApiResult> EditProject(ProjectEditDTO projectEditDTO, CancellationToken cancellationToken)
+        {
+            var userId = User.Identity.GetUserId();
+            var project = await _projectService.GetUserProjectById(projectEditDTO.ProjectId, userId, cancellationToken);
+
+            if (project is null)
+            {
+                throw new AppException(HttpStatusCode.NotFound, "There is no project with this data.");
+            }
+
+            project.Description = string.IsNullOrWhiteSpace(projectEditDTO.Description) ? project.Description : projectEditDTO.Description;
+            project.DeadlineDate = projectEditDTO.DeadlineDate.HasValue ? projectEditDTO.DeadlineDate.Value : project.DeadlineDate;
+
+            await _projectService.EditProject(project, cancellationToken);
+
+            return new ApiResult(true, ApiResponseStatus.Success, HttpStatusCode.OK, "Project updated successfully.");
+        }
+
+        [HttpPost]
+        [ActionName("DeleteProject")]
+        public async Task<ApiResult> DeleteProject(ProjectDeleteDTO projectDeleteDTO, CancellationToken cancellationToken)
+        {
+            var userId = User.Identity.GetUserId();
+            var project = await _projectService.GetUserProjectById(projectDeleteDTO.ProjectId, userId, cancellationToken);
+
+            if (project is null)
+            {
+                throw new AppException(HttpStatusCode.NotFound, "There is no project with this data.");
+            }
+
+            await _projectService.DeleteProject(project, cancellationToken);
+
+            return new ApiResult(true, ApiResponseStatus.Success, HttpStatusCode.OK, "Project deleted successfully.");
         }
     }
 }

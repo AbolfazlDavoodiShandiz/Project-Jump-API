@@ -13,12 +13,12 @@ namespace PMS.Data.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, IDbEntity
     {
-        protected readonly ApplicationDbContext ApplicationDbCintext;
+        protected readonly ApplicationDbContext ApplicationDbContext;
 
         public Repository(ApplicationDbContext context)
         {
-            ApplicationDbCintext = context;
-            Entities = ApplicationDbCintext.Set<TEntity>();
+            ApplicationDbContext = context;
+            Entities = ApplicationDbContext.Set<TEntity>();
         }
 
         public DbSet<TEntity> Entities { get; }
@@ -27,95 +27,59 @@ namespace PMS.Data.Repositories
 
         public virtual IQueryable<TEntity> TableNoTracking => Entities.AsNoTracking();
 
-        public virtual bool Add(TEntity entity, bool saveNow = true)
+        public virtual void Add(TEntity entity, bool saveNow = true)
         {
             Assert.NotNull(entity, nameof(entity));
 
             Entities.Add(entity);
 
-            bool result = false;
-
             if (saveNow)
             {
-                int id = ApplicationDbCintext.SaveChanges();
-
-                if (id > 0)
-                {
-                    result = true;
-                }
+                ApplicationDbContext.SaveChanges();
             }
-
-            return result;
         }
 
-        public virtual async Task<bool> AddAsync(TEntity entity, CancellationToken cancellationToken, bool saveNow = true)
+        public virtual async Task AddAsync(TEntity entity, CancellationToken cancellationToken, bool saveNow = true)
         {
             Assert.NotNull(entity, nameof(entity));
 
             await Entities.AddAsync(entity, cancellationToken);
 
-            bool result = false;
-
             if (saveNow)
             {
-                int id = await ApplicationDbCintext.SaveChangesAsync(cancellationToken);
-
-                if (id > 0)
-                {
-                    result = true;
-                }
+                await ApplicationDbContext.SaveChangesAsync(cancellationToken);
             }
-
-            return result;
         }
 
-        public virtual bool AddRange(IEnumerable<TEntity> entities, bool saveNow = true)
+        public virtual void AddRange(IEnumerable<TEntity> entities, bool saveNow = true)
         {
             Assert.NotNull(entities, nameof(entities));
 
             Entities.AddRange(entities);
 
-            bool result = false;
-
             if (saveNow)
             {
-                int id = ApplicationDbCintext.SaveChanges(); //TODO: What if an entity not inserted?
-
-                if (id > 0)
-                {
-                    result = true;
-                }
+                ApplicationDbContext.SaveChanges(); //TODO: What if an entity not inserted?
             }
-
-            return result;
         }
 
-        public virtual async Task<bool> AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken, bool saveNow = true)
+        public virtual async Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken, bool saveNow = true)
         {
             Assert.NotNull(entities, nameof(entities));
 
             await Entities.AddRangeAsync(entities, cancellationToken);
 
-            bool result = false;
-
             if (saveNow)
             {
-                int id = await ApplicationDbCintext.SaveChangesAsync(cancellationToken); //TODO: What if an entity not inserted?
-
-                if (id > 0)
-                {
-                    result = true;
-                }
+                await ApplicationDbContext.SaveChangesAsync(cancellationToken); //TODO: What if an entity not inserted?
             }
-
-            return result;
         }
 
         public virtual void Detach(TEntity entity)
         {
             Assert.NotNull(entity, nameof(entity));
 
-            var entry = ApplicationDbCintext.Entry(entity);
+            var entry = ApplicationDbContext.Entry(entity);
 
             if (entry != null)
             {
@@ -127,7 +91,7 @@ namespace PMS.Data.Repositories
         {
             Assert.NotNull(entity, nameof(entity));
 
-            if (ApplicationDbCintext.Entry(entity).State == EntityState.Detached)
+            if (ApplicationDbContext.Entry(entity).State == EntityState.Detached)
             {
                 Entities.Attach(entity);
             }
@@ -141,7 +105,7 @@ namespace PMS.Data.Repositories
 
             if (saveNow)
             {
-                ApplicationDbCintext.SaveChanges();
+                ApplicationDbContext.SaveChanges();
             }
         }
 
@@ -153,7 +117,7 @@ namespace PMS.Data.Repositories
 
             if (saveNow)
             {
-                await ApplicationDbCintext.SaveChangesAsync(cancellationToken);
+                await ApplicationDbContext.SaveChangesAsync(cancellationToken);
             }
         }
 
@@ -165,7 +129,7 @@ namespace PMS.Data.Repositories
 
             if (saveNow)
             {
-                ApplicationDbCintext.SaveChanges();
+                ApplicationDbContext.SaveChanges();
             }
         }
 
@@ -177,7 +141,7 @@ namespace PMS.Data.Repositories
 
             if (saveNow)
             {
-                await ApplicationDbCintext.SaveChangesAsync(cancellationToken);
+                await ApplicationDbContext.SaveChangesAsync(cancellationToken);
             }
         }
 
@@ -196,7 +160,7 @@ namespace PMS.Data.Repositories
         {
             Attach(entity);
 
-            var collection = ApplicationDbCintext.Entry(entity).Collection(collectionProperty);
+            var collection = ApplicationDbContext.Entry(entity).Collection(collectionProperty);
 
             if (!collection.IsLoaded)
             {
@@ -209,7 +173,7 @@ namespace PMS.Data.Repositories
         {
             Attach(entity);
 
-            var collection = ApplicationDbCintext.Entry(entity).Collection(collectionProperty);
+            var collection = ApplicationDbContext.Entry(entity).Collection(collectionProperty);
 
             if (!collection.IsLoaded)
             {
@@ -222,7 +186,7 @@ namespace PMS.Data.Repositories
         {
             Attach(entity);
 
-            var reference = ApplicationDbCintext.Entry(entity).Reference(referenceProperty);
+            var reference = ApplicationDbContext.Entry(entity).Reference(referenceProperty);
 
             if (!reference.IsLoaded)
             {
@@ -235,7 +199,7 @@ namespace PMS.Data.Repositories
         {
             Attach(entity);
 
-            var reference = ApplicationDbCintext.Entry(entity).Reference(referenceProperty);
+            var reference = ApplicationDbContext.Entry(entity).Reference(referenceProperty);
 
             if (!reference.IsLoaded)
             {
@@ -251,7 +215,7 @@ namespace PMS.Data.Repositories
 
             if (saveNow)
             {
-                ApplicationDbCintext.SaveChanges();
+                ApplicationDbContext.SaveChanges();
             }
         }
 
@@ -263,7 +227,7 @@ namespace PMS.Data.Repositories
 
             if (saveNow)
             {
-                await ApplicationDbCintext.SaveChangesAsync(cancellationToken);
+                await ApplicationDbContext.SaveChangesAsync(cancellationToken);
             }
         }
 
@@ -275,7 +239,7 @@ namespace PMS.Data.Repositories
 
             if (saveNow)
             {
-                ApplicationDbCintext.SaveChanges();
+                ApplicationDbContext.SaveChanges();
             }
         }
 
@@ -287,7 +251,7 @@ namespace PMS.Data.Repositories
 
             if (saveNow)
             {
-                await ApplicationDbCintext.SaveChangesAsync(cancellationToken);
+                await ApplicationDbContext.SaveChangesAsync(cancellationToken);
             }
         }
     }
