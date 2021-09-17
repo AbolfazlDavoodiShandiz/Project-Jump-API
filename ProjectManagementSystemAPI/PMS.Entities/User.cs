@@ -29,7 +29,7 @@ namespace PMS.Entities
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.HasMany(u => u.Projects).WithOne(p => p.User).HasForeignKey(p => p.UserId);
+            builder.HasMany(u => u.Projects).WithOne(p => p.Owner).HasForeignKey(p => p.OwnerId);
         }
     }
 }

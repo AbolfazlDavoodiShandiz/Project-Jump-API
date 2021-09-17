@@ -19,10 +19,10 @@ namespace PMS.Data
         TEntity GetById(params object[] ids);
         ValueTask<TEntity> GetByIdAsync(CancellationToken cancellationToken, params object[] ids);
 
-        void Add(TEntity entity, bool saveNow = true);
-        Task AddAsync(TEntity entity, CancellationToken cancellationToken, bool saveNow = true);
-        void AddRange(IEnumerable<TEntity> entities, bool saveNow = true);
-        Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken, bool saveNow = true);
+        bool Add(TEntity entity, bool saveNow = true);
+        Task<bool> AddAsync(TEntity entity, CancellationToken cancellationToken, bool saveNow = true);
+        bool AddRange(IEnumerable<TEntity> entities, bool saveNow = true);
+        Task<bool> AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken, bool saveNow = true);
 
         void Update(TEntity entity, bool saveNow = true);
         Task UpdateAsync(TEntity entity, CancellationToken cancellationToken, bool saveNow = true);

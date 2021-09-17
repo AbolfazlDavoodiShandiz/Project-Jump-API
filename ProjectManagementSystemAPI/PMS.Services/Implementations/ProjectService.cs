@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PMS.Services.Implementations
@@ -18,9 +19,23 @@ namespace PMS.Services.Implementations
             _projectRepository = projectRepository;
         }
 
-        public async Task<IEnumerable<Project>> GetAll(int userId)
+        public async Task<bool> CreateProject(Project project, CancellationToken cancellationToken)
         {
-            return await _projectRepository.TableNoTracking.Where(p => p.UserId == userId).Include(p => p.Tasks).ToListAsync();
+            bool result = await _projectRepository.AddAsync(project, cancellationToken);
+
+            return result;
+        }
+
+        public async Task<bool> ExistsByTitle(string name, CancellationToken cancellationToken)
+        {
+            var exists = await _projectRepository.TableNoTracking.AnyAsync(p => p.Title == name, cancellationToken);
+
+            return exists;
+        }
+
+        public async Task<IEnumerable<Project>> GetAll(int userId, CancellationToken cancellationToken)
+        {
+            return await _projectRepository.TableNoTracking.Where(p => p.OwnerId == userId).Include(p => p.Tasks).ToListAsync(cancellationToken);
         }
     }
 }

@@ -27,52 +27,88 @@ namespace PMS.Data.Repositories
 
         public virtual IQueryable<TEntity> TableNoTracking => Entities.AsNoTracking();
 
-        public virtual void Add(TEntity entity, bool saveNow = true)
+        public virtual bool Add(TEntity entity, bool saveNow = true)
         {
             Assert.NotNull(entity, nameof(entity));
 
             Entities.Add(entity);
 
+            bool result = false;
+
             if (saveNow)
             {
-                ApplicationDbCintext.SaveChanges();
+                int id = ApplicationDbCintext.SaveChanges();
+
+                if (id > 0)
+                {
+                    result = true;
+                }
             }
+
+            return result;
         }
 
-        public virtual async Task AddAsync(TEntity entity, CancellationToken cancellationToken, bool saveNow = true)
+        public virtual async Task<bool> AddAsync(TEntity entity, CancellationToken cancellationToken, bool saveNow = true)
         {
             Assert.NotNull(entity, nameof(entity));
 
             await Entities.AddAsync(entity, cancellationToken);
 
+            bool result = false;
+
             if (saveNow)
             {
-                await ApplicationDbCintext.SaveChangesAsync(cancellationToken);
+                int id = await ApplicationDbCintext.SaveChangesAsync(cancellationToken);
+
+                if (id > 0)
+                {
+                    result = true;
+                }
             }
+
+            return result;
         }
 
-        public virtual void AddRange(IEnumerable<TEntity> entities, bool saveNow = true)
+        public virtual bool AddRange(IEnumerable<TEntity> entities, bool saveNow = true)
         {
             Assert.NotNull(entities, nameof(entities));
 
             Entities.AddRange(entities);
 
+            bool result = false;
+
             if (saveNow)
             {
-                ApplicationDbCintext.SaveChanges();
+                int id = ApplicationDbCintext.SaveChanges(); //TODO: What if an entity not inserted?
+
+                if (id > 0)
+                {
+                    result = true;
+                }
             }
+
+            return result;
         }
 
-        public virtual async Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken, bool saveNow = true)
+        public virtual async Task<bool> AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken, bool saveNow = true)
         {
             Assert.NotNull(entities, nameof(entities));
 
             await Entities.AddRangeAsync(entities, cancellationToken);
 
+            bool result = false;
+
             if (saveNow)
             {
-                await ApplicationDbCintext.SaveChangesAsync(cancellationToken);
+                int id = await ApplicationDbCintext.SaveChangesAsync(cancellationToken); //TODO: What if an entity not inserted?
+
+                if (id > 0)
+                {
+                    result = true;
+                }
             }
+
+            return result;
         }
 
         public virtual void Detach(TEntity entity)

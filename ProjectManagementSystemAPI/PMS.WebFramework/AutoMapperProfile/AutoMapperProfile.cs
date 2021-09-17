@@ -14,6 +14,7 @@ namespace PMS.WebFramework.AutoMapperProfile
         public AutoMapperProfile()
         {
             CreateMap<Project, ProjectDTO>().ReverseMap();
+            CreateMap<Project, ProjectRegistrationDTO>().ReverseMap();
             CreateMap<ProjectTask, ProjectTaskDTO>().ReverseMap();
         }
     }
