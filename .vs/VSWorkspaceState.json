@@ -5,6 +5,6 @@
     "\\ProjectManagementSystemAPI\\PMS.Entities",
     "\\ProjectManagementSystemAPI\\PMS.WebAPI"
   ],
-  "SelectedNode": "\\ProjectManagementSystemAPI\\ProjectManagementSystemAPI.sln",
+  "SelectedNode": "\\ProjectManagementSystemAPI\\PMS.WebAPI\\Startup.cs",
   "PreviewInSolutionExplorer": false
 }

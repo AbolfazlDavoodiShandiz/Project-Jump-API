@@ -39,6 +39,7 @@ namespace PMS.WebFramework.Configurations
             services.Configure<SiteSettings>(configuration.GetSection(nameof(SiteSettings)));
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IProjectService, ProjectService>();
+            services.AddScoped<IProjectTaskService, ProjectTaskService>();
             services.AddScoped<IJwtServices, JwtServices>();
         }
 

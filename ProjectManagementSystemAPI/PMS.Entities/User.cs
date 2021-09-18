@@ -23,6 +23,8 @@ namespace PMS.Entities
         public DateTime? LastLoginDate { get; set; }
 
         public ICollection<Project> Projects { get; set; }
+        public ICollection<ProjectTask> Tasks { get; set; }
+        public ICollection<UserTask> UserTasks { get; set; }
     }
 
     public class UserConfiguration : IEntityTypeConfiguration<User>
@@ -30,6 +32,8 @@ namespace PMS.Entities
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.HasMany(u => u.Projects).WithOne(p => p.Owner).HasForeignKey(p => p.OwnerId);
+            builder.HasMany(u => u.Tasks).WithOne(pt => pt.Owner).HasForeignKey(pt => pt.OwnerId);
+            builder.HasMany(u => u.UserTasks).WithOne(ut => ut.User).HasForeignKey(ut => ut.UserId);
         }
     }
 }

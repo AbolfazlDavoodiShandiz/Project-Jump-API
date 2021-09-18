@@ -45,6 +45,11 @@ namespace PMS.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(c => c.AddPolicy("PMS_API", options =>
+            {
+                options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+            }));
+
             services.AddApplicationDbContext(Configuration);
             services.AddApplicationDependencyInjection(Configuration);
             services.AddAutoMapper(config => config.AddProfile(new AutoMapperProfile()));
@@ -56,7 +61,7 @@ namespace PMS.WebAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseCors("PMS");
+            app.UseCors("PMS_API");
 
             app.UseMiddleware<CustomExceptionHandlerMiddleware>();
 

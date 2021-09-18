@@ -167,6 +167,12 @@ namespace PMS.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("Done")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("OwnerId")
+                        .HasColumnType("int");
+
                     b.Property<int>("ProjectId")
                         .HasColumnType("int");
 
@@ -175,6 +181,8 @@ namespace PMS.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
 
                     b.HasIndex("ProjectId");
 
@@ -292,6 +300,28 @@ namespace PMS.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("PMS.Entities.UserTask", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("TaskId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TaskId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserTasks");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("PMS.Entities.Role", null)
@@ -356,13 +386,40 @@ namespace PMS.Data.Migrations
 
             modelBuilder.Entity("PMS.Entities.ProjectTask", b =>
                 {
+                    b.HasOne("PMS.Entities.User", "Owner")
+                        .WithMany("Tasks")
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("PMS.Entities.Project", "Project")
                         .WithMany("Tasks")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.Navigation("Owner");
+
                     b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("PMS.Entities.UserTask", b =>
+                {
+                    b.HasOne("PMS.Entities.ProjectTask", "ProjectTask")
+                        .WithMany("UserTasks")
+                        .HasForeignKey("TaskId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("PMS.Entities.User", "User")
+                        .WithMany("UserTasks")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ProjectTask");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("PMS.Entities.Project", b =>
@@ -370,9 +427,18 @@ namespace PMS.Data.Migrations
                     b.Navigation("Tasks");
                 });
 
+            modelBuilder.Entity("PMS.Entities.ProjectTask", b =>
+                {
+                    b.Navigation("UserTasks");
+                });
+
             modelBuilder.Entity("PMS.Entities.User", b =>
                 {
                     b.Navigation("Projects");
+
+                    b.Navigation("Tasks");
+
+                    b.Navigation("UserTasks");
                 });
 #pragma warning restore 612, 618
         }

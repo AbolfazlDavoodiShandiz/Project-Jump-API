@@ -13,7 +13,8 @@ namespace PMS.DTO
         public string Description { get; set; }
         public DateTime CreatedDate { get; internal set; }
         public DateTime DeadlineDate { get; set; }
-        public ProjectDTO Project { get; set; }
+        public int OwnerId { get; set; }
         public int ProjectId { get; set; }
+        public bool Done { get; set; }
     }
 }

@@ -30,12 +30,12 @@ namespace PMS.WebAPI.Controllers
         }
 
         [HttpGet]
-        [ActionName("GetAll")]
-        public async Task<ApiResult<IEnumerable<ProjectDTO>>> GetAll(CancellationToken cancellationToken)
+        [ActionName("GetAllUserProjects")]
+        public async Task<ApiResult<IEnumerable<ProjectDTO>>> GetAllUserProjects(CancellationToken cancellationToken)
         {
             var userId = User.Identity.GetUserId();
 
-            var list = await _projectService.GetAll(userId, cancellationToken);
+            var list = await _projectService.GetAllByUserId(userId, cancellationToken);
 
             if (list is not null && list.Count() > 0)
             {
@@ -44,7 +44,7 @@ namespace PMS.WebAPI.Controllers
             }
             else
             {
-                return NotFound();
+                throw new AppException(HttpStatusCode.NotFound, "There is no project(s) for this user.");
             }
         }
 
