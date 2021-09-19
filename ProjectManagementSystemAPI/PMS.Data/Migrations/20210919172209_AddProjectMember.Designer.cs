@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PMS.Data;
 
 namespace PMS.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210919172209_AddProjectMember")]
+    partial class AddProjectMember
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,6 +141,12 @@ namespace PMS.Data.Migrations
                     b.Property<int>("OwnerId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ProjectTeamId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProjectTeamId1")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -146,6 +154,8 @@ namespace PMS.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("OwnerId");
+
+                    b.HasIndex("ProjectTeamId1");
 
                     b.ToTable("Projects");
                 });
@@ -403,7 +413,13 @@ namespace PMS.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("PMS.Entities.ProjectMember", "ProjectTeam")
+                        .WithMany()
+                        .HasForeignKey("ProjectTeamId1");
+
                     b.Navigation("Owner");
+
+                    b.Navigation("ProjectTeam");
                 });
 
             modelBuilder.Entity("PMS.Entities.ProjectMember", b =>

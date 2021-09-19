@@ -40,6 +40,7 @@ namespace PMS.WebFramework.Configurations
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<IProjectTaskService, ProjectTaskService>();
+            services.AddScoped<IProjectMemberService, ProjectMemberService>();
             services.AddScoped<IJwtServices, JwtServices>();
         }
 

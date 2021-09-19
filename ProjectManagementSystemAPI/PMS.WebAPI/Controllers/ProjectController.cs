@@ -21,31 +21,14 @@ namespace PMS.WebAPI.Controllers
     public class ProjectController : ControllerBase
     {
         private readonly IProjectService _projectService;
+        private readonly IProjectMemberService _projectMemberService;
         private readonly IMapper _mapper;
 
-        public ProjectController(IProjectService projectService, IMapper mapper)
+        public ProjectController(IProjectService projectService, IProjectMemberService projectMemberService, IMapper mapper)
         {
             _projectService = projectService;
+            _projectMemberService = projectMemberService;
             _mapper = mapper;
-        }
-
-        [HttpGet]
-        [ActionName("GetAllUserProjects")]
-        public async Task<ApiResult<IEnumerable<ProjectDTO>>> GetAllUserProjects(CancellationToken cancellationToken)
-        {
-            var userId = User.Identity.GetUserId();
-
-            var list = await _projectService.GetAllByUserId(userId, cancellationToken);
-
-            if (list is not null && list.Count() > 0)
-            {
-                var mappedList = _mapper.Map<IEnumerable<ProjectDTO>>(list);
-                return Ok(mappedList);
-            }
-            else
-            {
-                throw new AppException(HttpStatusCode.NotFound, "There is no project(s) for this user.");
-            }
         }
 
         [HttpPost]
@@ -64,7 +47,34 @@ namespace PMS.WebAPI.Controllers
 
             await _projectService.CreateProject(project, cancellationToken);
 
+            var projectMember = new ProjectMember
+            {
+                ProjectId = project.Id,
+                UserId = userId
+            };
+
+            await _projectMemberService.AddProjectMember(projectMember, cancellationToken);
+
             return new ApiResult(true, ApiResponseStatus.Success, HttpStatusCode.OK, "Project created successfully.");
+        }
+
+        [HttpGet]
+        [ActionName("UserCreatedProjectList")]
+        public async Task<ApiResult<IEnumerable<ProjectDTO>>> UserCreatedProjectList(CancellationToken cancellationToken)
+        {
+            var userId = User.Identity.GetUserId();
+
+            var list = await _projectService.GetAllByUserId(userId, cancellationToken);
+
+            if (list is not null && list.Count() > 0)
+            {
+                var mappedList = _mapper.Map<IEnumerable<ProjectDTO>>(list);
+                return Ok(mappedList);
+            }
+            else
+            {
+                throw new AppException(HttpStatusCode.NotFound, "There is no project(s) for this user.");
+            }
         }
 
         [HttpPost]

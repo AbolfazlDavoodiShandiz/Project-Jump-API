@@ -29,9 +29,43 @@ namespace PMS.WebAPI.Controllers
             _mapper = mapper;
         }
 
+        [HttpPost]
+        [ActionName("CreateProjectTask")]
+        public async Task<ApiResult> CreateProjectTask(ProjectTaskRegistrationDTO projectTaskRegistrationDTO, CancellationToken cancellationToken)
+        {
+            var userId = User.Identity.GetUserId();
+
+            var projectTask = _mapper.Map<ProjectTask>(projectTaskRegistrationDTO);
+            projectTask.OwnerId = userId;
+
+            await _projectTaskService.CreateProjectTask(projectTask, cancellationToken);
+
+            return new ApiResult(true, ApiResponseStatus.Success, HttpStatusCode.OK, "Project task created successfully.");
+        }
+
         [HttpGet]
-        [ActionName("GetAllUserTasks")]
-        public async Task<ApiResult<IEnumerable<ProjectTaskDTO>>> GetAllUserTasks(CancellationToken cancellationToken)
+        [ActionName("UserCreatedTaskList")]
+        public async Task<ApiResult<IEnumerable<ProjectTaskDTO>>> UserCreatedTaskList(CancellationToken cancellationToken)
+        {
+            var userId = User.Identity.GetUserId();
+
+            var tasks = await _projectTaskService.GetUserCreatedTasks(userId, cancellationToken);
+
+            if (tasks is not null && tasks.Count() > 0)
+            {
+                var mapped = _mapper.Map<IEnumerable<ProjectTaskDTO>>(tasks);
+
+                return Ok(mapped);
+            }
+            else
+            {
+                throw new AppException(HttpStatusCode.NotFound, "There is no task(s) created by this user.");
+            }
+        }
+
+        [HttpGet]
+        [ActionName("UserAssignedTaskList")]
+        public async Task<ApiResult<IEnumerable<ProjectTaskDTO>>> UserAssignedTaskList(CancellationToken cancellationToken)
         {
             var userId = User.Identity.GetUserId();
 
@@ -49,8 +83,8 @@ namespace PMS.WebAPI.Controllers
         }
 
         [HttpGet]
-        [ActionName("GetAllUserCompletedTasks")]
-        public async Task<ApiResult<IEnumerable<ProjectTaskDTO>>> GetAllUserCompletedTasks(CancellationToken cancellationToken)
+        [ActionName("UserCompletedTaskList")]
+        public async Task<ApiResult<IEnumerable<ProjectTaskDTO>>> UserCompletedTaskList(CancellationToken cancellationToken)
         {
             var userId = User.Identity.GetUserId();
 
@@ -68,8 +102,8 @@ namespace PMS.WebAPI.Controllers
         }
 
         [HttpGet]
-        [ActionName("GetAllUserIncompletedTasks")]
-        public async Task<ApiResult<IEnumerable<ProjectTaskDTO>>> GetAllUserIncompletedTasks(CancellationToken cancellationToken)
+        [ActionName("UserIncompleteTaskList")]
+        public async Task<ApiResult<IEnumerable<ProjectTaskDTO>>> UserIncompleteTaskList(CancellationToken cancellationToken)
         {
             var userId = User.Identity.GetUserId();
 
@@ -84,20 +118,6 @@ namespace PMS.WebAPI.Controllers
             {
                 throw new AppException(HttpStatusCode.NotFound, "There is no incompleted task(s) for this user.");
             }
-        }
-
-        [HttpPost]
-        [ActionName("CreateProjectTask")]
-        public async Task<ApiResult> CreateProjectTask(ProjectTaskRegistrationDTO projectTaskRegistrationDTO, CancellationToken cancellationToken)
-        {
-            var userId = User.Identity.GetUserId();
-
-            var projectTask = _mapper.Map<ProjectTask>(projectTaskRegistrationDTO);
-            projectTask.OwnerId = userId;
-
-            await _projectTaskService.CreateProjectTask(projectTask, cancellationToken);
-
-            return new ApiResult(true, ApiResponseStatus.Success, HttpStatusCode.OK, "Project task created successfully.");
         }
     }
 }

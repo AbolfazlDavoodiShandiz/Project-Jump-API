@@ -24,6 +24,7 @@ namespace PMS.Entities
         public int OwnerId { get; set; }
 
         public ICollection<ProjectTask> Tasks { get; set; }
+        public ICollection<ProjectMember> Members { get; set; }
     }
 
     public class ProjectConfiguration : IEntityTypeConfiguration<Project>
@@ -33,6 +34,7 @@ namespace PMS.Entities
             builder.Property(p => p.Title).IsRequired();
             builder.Property(p => p.DeadlineDate).IsRequired();
             builder.HasMany(p => p.Tasks).WithOne(t => t.Project).HasForeignKey(t => t.ProjectId);
+            builder.HasMany(p => p.Members).WithOne(t => t.Project).HasForeignKey(t => t.ProjectId);
         }
     }
 }

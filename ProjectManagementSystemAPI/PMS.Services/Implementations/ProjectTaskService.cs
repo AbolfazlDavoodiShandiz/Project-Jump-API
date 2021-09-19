@@ -26,6 +26,16 @@ namespace PMS.Services.Implementations
             await _projectTaskRepository.AddAsync(projectTask, cancellationToken);
         }
 
+        public Task DeleteTask(ProjectTask projectTask, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task EditProjectTask(ProjectTask projectTask, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IEnumerable<ProjectTask>> GetAllByUserId(int userId, CancellationToken cancellationToken,
             bool justIncompletedTasks = true, bool justCompletedTask = true)
         {
@@ -57,6 +67,13 @@ namespace PMS.Services.Implementations
                 .Select(ut => ut.ProjectTask)
                 .ToListAsync(cancellationToken);
             }
+
+            return tasks;
+        }
+
+        public async Task<IEnumerable<ProjectTask>> GetUserCreatedTasks(int userId, CancellationToken cancellationToken)
+        {
+            var tasks = await _projectTaskRepository.TableNoTracking.Where(t => t.OwnerId == userId).ToListAsync(cancellationToken);
 
             return tasks;
         }

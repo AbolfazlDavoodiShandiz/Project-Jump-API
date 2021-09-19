@@ -3,8 +3,9 @@
     "",
     "\\ProjectManagementSystemAPI",
     "\\ProjectManagementSystemAPI\\PMS.Entities",
-    "\\ProjectManagementSystemAPI\\PMS.WebAPI"
+    "\\ProjectManagementSystemAPI\\PMS.WebAPI",
+    "\\ProjectManagementSystemAPI\\PMS.WebAPI\\Controllers"
   ],
-  "SelectedNode": "\\ProjectManagementSystemAPI\\PMS.WebAPI\\Startup.cs",
+  "SelectedNode": "\\ProjectManagementSystemAPI\\PMS.WebAPI\\Controllers\\ProjectController.cs",
   "PreviewInSolutionExplorer": false
 }
