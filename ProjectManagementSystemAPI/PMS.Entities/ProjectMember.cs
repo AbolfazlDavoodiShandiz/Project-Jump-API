@@ -10,11 +10,18 @@ namespace PMS.Entities
 {
     public class ProjectMember : BaseEntity
     {
+        public ProjectMember()
+        {
+            IsProjectOwner = false;
+        }
+
         public Project Project { get; set; }
         public int ProjectId { get; set; }
 
         public User User { get; set; }
         public int UserId { get; set; }
+
+        public bool IsProjectOwner { get; set; }
     }
 
     public class ProjectTeamConfiguration : IEntityTypeConfiguration<ProjectMember>

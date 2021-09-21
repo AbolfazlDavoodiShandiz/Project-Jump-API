@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PMS.Common.Enums;
 using PMS.Common.Utility;
@@ -22,12 +23,14 @@ namespace PMS.WebAPI.Controllers
     {
         private readonly IProjectService _projectService;
         private readonly IProjectMemberService _projectMemberService;
+        private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
 
-        public ProjectController(IProjectService projectService, IProjectMemberService projectMemberService, IMapper mapper)
+        public ProjectController(IProjectService projectService, IProjectMemberService projectMemberService, UserManager<User> userManager, IMapper mapper)
         {
             _projectService = projectService;
             _projectMemberService = projectMemberService;
+            _userManager = userManager;
             _mapper = mapper;
         }
 
@@ -50,7 +53,8 @@ namespace PMS.WebAPI.Controllers
             var projectMember = new ProjectMember
             {
                 ProjectId = project.Id,
-                UserId = userId
+                UserId = userId,
+                IsProjectOwner = true
             };
 
             await _projectMemberService.AddProjectMember(projectMember, cancellationToken);
@@ -112,6 +116,30 @@ namespace PMS.WebAPI.Controllers
             await _projectService.DeleteProject(project, cancellationToken);
 
             return new ApiResult(true, ApiResponseStatus.Success, HttpStatusCode.OK, "Project deleted successfully.");
+        }
+
+        [HttpPost]
+        [ActionName("RegisterProjectMember")]
+        public async Task<ApiResult> RegisterProjectMember(ProjectMemberAddNewDTO projectMemberAddNewDTO, CancellationToken cancellationToken)
+        {
+            var member = await _userManager.FindByEmailAsync(projectMemberAddNewDTO.MemberEmail);
+
+            if (member is not null)
+            {
+                var projectMember = new ProjectMember
+                {
+                    UserId = member.Id,
+                    ProjectId = projectMemberAddNewDTO.ProjectId
+                };
+
+                await _projectMemberService.AddProjectMember(projectMember, cancellationToken);
+
+                return new ApiResult(true, ApiResponseStatus.Success, HttpStatusCode.OK, "Project member added sucessfully.");
+            }
+            else
+            {
+                throw new AppException(HttpStatusCode.NotFound, "This user email doesn't exist.There is no user with this email.");
+            }
         }
     }
 }
