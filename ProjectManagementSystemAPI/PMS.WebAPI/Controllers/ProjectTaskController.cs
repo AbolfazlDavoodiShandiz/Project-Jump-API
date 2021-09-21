@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PMS.Common.Enums;
 using PMS.Common.Utility;
@@ -21,11 +22,13 @@ namespace PMS.WebAPI.Controllers
     public class ProjectTaskController : ControllerBase
     {
         private readonly IProjectTaskService _projectTaskService;
+        private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
 
-        public ProjectTaskController(IProjectTaskService projectTaskService, IMapper mapper)
+        public ProjectTaskController(IProjectTaskService projectTaskService, UserManager<User> userManager, IMapper mapper)
         {
             _projectTaskService = projectTaskService;
+            _userManager = userManager;
             _mapper = mapper;
         }
 
@@ -118,6 +121,35 @@ namespace PMS.WebAPI.Controllers
             {
                 throw new AppException(HttpStatusCode.NotFound, "There is no incompleted task(s) for this user.");
             }
+        }
+
+        [HttpPost]
+        [ActionName("AssignTaskToProjectMember")]
+        public async Task<ApiResult> AssignTaskToProjectMember(ProjectTaskAssignToMemberDTO projectTaskAssignToMemberDTO, CancellationToken cancellationToken)
+        {
+            var user = await _userManager.FindByIdAsync(projectTaskAssignToMemberDTO.UserId.ToString());
+
+            if (user is null)
+            {
+                throw new AppException(HttpStatusCode.NotFound, "This user doesn't exist.");
+            }
+
+            var task = await _projectTaskService.GetByIdAsync(projectTaskAssignToMemberDTO.TaskId, cancellationToken);
+
+            if (task is null)
+            {
+                throw new AppException(HttpStatusCode.NotFound, "This task doesn't exist.");
+            }
+
+            var userTask = new UserTask
+            {
+                UserId = projectTaskAssignToMemberDTO.UserId,
+                TaskId = projectTaskAssignToMemberDTO.TaskId
+            };
+
+            await _projectTaskService.AssignProjectTaskToProjectMember(userTask, cancellationToken);
+
+            return new ApiResult(true, ApiResponseStatus.Success, HttpStatusCode.OK, "Task assigned to user successfully.");
         }
     }
 }

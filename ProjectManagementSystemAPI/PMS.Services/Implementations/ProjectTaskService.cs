@@ -21,6 +21,11 @@ namespace PMS.Services.Implementations
             _userTaskRepository = userTaskRepository;
         }
 
+        public async Task AssignProjectTaskToProjectMember(UserTask userTask, CancellationToken cancellationToken)
+        {
+            await _userTaskRepository.AddAsync(userTask, cancellationToken);
+        }
+
         public async Task CreateProjectTask(ProjectTask projectTask, CancellationToken cancellationToken)
         {
             await _projectTaskRepository.AddAsync(projectTask, cancellationToken);
@@ -76,6 +81,11 @@ namespace PMS.Services.Implementations
             var tasks = await _projectTaskRepository.TableNoTracking.Where(t => t.OwnerId == userId).ToListAsync(cancellationToken);
 
             return tasks;
+        }
+
+        public async Task<ProjectTask> GetByIdAsync(int id, CancellationToken cancellationToken)
+        {
+            return await _projectTaskRepository.TableNoTracking.Where(t => t.Id == id).SingleOrDefaultAsync(cancellationToken);
         }
     }
 }
