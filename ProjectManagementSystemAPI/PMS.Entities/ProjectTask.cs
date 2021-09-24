@@ -20,6 +20,7 @@ namespace PMS.Entities
         public string Description { get; set; }
         public DateTime CreatedDate { get; internal set; }
         public DateTime DeadlineDate { get; set; }
+        public DateTime? CompleteDate { get; set; }
         public bool Done { get; set; }
 
         public User Owner { get; set; }

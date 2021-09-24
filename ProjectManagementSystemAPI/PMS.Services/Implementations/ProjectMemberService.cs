@@ -1,4 +1,5 @@
-﻿using PMS.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using PMS.Data;
 using PMS.Entities;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,11 @@ namespace PMS.Services.Implementations
         public async Task AddProjectMember(ProjectMember projectMember, CancellationToken cancellationToken)
         {
             await _projectMemberRepository.AddAsync(projectMember, cancellationToken);
+        }
+
+        public async Task<bool> IsProjectMember(int userId, int projectId, CancellationToken cancellationToken)
+        {
+            return await _projectMemberRepository.TableNoTracking.AnyAsync(m => m.ProjectId == projectId && m.UserId == userId, cancellationToken);
         }
     }
 }

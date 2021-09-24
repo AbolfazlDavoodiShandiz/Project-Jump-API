@@ -22,12 +22,14 @@ namespace PMS.WebAPI.Controllers
     public class ProjectTaskController : ControllerBase
     {
         private readonly IProjectTaskService _projectTaskService;
+        private readonly IProjectMemberService _projectMemberService;
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
 
-        public ProjectTaskController(IProjectTaskService projectTaskService, UserManager<User> userManager, IMapper mapper)
+        public ProjectTaskController(IProjectTaskService projectTaskService, IProjectMemberService projectMemberService, UserManager<User> userManager, IMapper mapper)
         {
             _projectTaskService = projectTaskService;
+            _projectMemberService = projectMemberService;
             _userManager = userManager;
             _mapper = mapper;
         }
@@ -141,6 +143,13 @@ namespace PMS.WebAPI.Controllers
                 throw new AppException(HttpStatusCode.NotFound, "This task doesn't exist.");
             }
 
+            var isProjectMember = await _projectMemberService.IsProjectMember(user.Id, task.Id, cancellationToken);
+
+            if (!isProjectMember)
+            {
+                throw new AppException(HttpStatusCode.BadRequest, "User is not a member of task's project team.");
+            }
+
             var userTask = new UserTask
             {
                 UserId = projectTaskAssignToMemberDTO.UserId,
@@ -150,6 +159,24 @@ namespace PMS.WebAPI.Controllers
             await _projectTaskService.AssignProjectTaskToProjectMember(userTask, cancellationToken);
 
             return new ApiResult(true, ApiResponseStatus.Success, HttpStatusCode.OK, "Task assigned to user successfully.");
+        }
+
+        [HttpPost]
+        [ActionName("MarkTaskAsDone")]
+        public async Task<ApiResult> MarkTaskAsDone(EntityIdDTO TaskDoneDTO, CancellationToken cancellationToken)
+        {
+            var userId = User.Identity.GetUserId();
+
+            var isAssigned = await _projectTaskService.IsAssigned(userId, TaskDoneDTO.Id, cancellationToken);
+
+            if (!isAssigned)
+            {
+                throw new AppException(HttpStatusCode.NotFound, "Task id or user id is incorrect or this task isn't assigned to this user.");
+            }
+
+            await _projectTaskService.MarkAsDone(TaskDoneDTO.Id, cancellationToken);
+
+            return new ApiResult(true, ApiResponseStatus.Success, HttpStatusCode.OK, "Task marked as done.");
         }
     }
 }

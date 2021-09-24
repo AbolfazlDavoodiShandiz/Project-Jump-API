@@ -17,5 +17,7 @@ namespace PMS.Services
         Task EditProjectTask(ProjectTask projectTask, CancellationToken cancellationToken);
         Task DeleteTask(ProjectTask projectTask, CancellationToken cancellationToken);
         Task AssignProjectTaskToProjectMember(UserTask userTask, CancellationToken cancellationToken);
+        Task MarkAsDone(int taskId, CancellationToken cancellationToken);
+        Task<bool> IsAssigned(int userId, int taskId, CancellationToken cancellationToken);
     }
 }

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace PMS.DTO
 {
-    public class ProjectDeleteDTO
+    public class EntityIdDTO
     {
         [Required]
-        public int ProjectId { get; set; }
+        public int Id { get; set; }
     }
 }

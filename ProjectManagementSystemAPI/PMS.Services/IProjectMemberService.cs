@@ -11,5 +11,6 @@ namespace PMS.Services
     public interface IProjectMemberService
     {
         Task AddProjectMember(ProjectMember projectMember, CancellationToken cancellationToken);
+        Task<bool> IsProjectMember(int userId, int projectId, CancellationToken cancellationToken);
     }
 }

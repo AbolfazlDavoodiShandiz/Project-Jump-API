@@ -103,10 +103,10 @@ namespace PMS.WebAPI.Controllers
 
         [HttpPost]
         [ActionName("DeleteProject")]
-        public async Task<ApiResult> DeleteProject(ProjectDeleteDTO projectDeleteDTO, CancellationToken cancellationToken)
+        public async Task<ApiResult> DeleteProject(EntityIdDTO projectDeleteDTO, CancellationToken cancellationToken)
         {
             var userId = User.Identity.GetUserId();
-            var project = await _projectService.GetUserProjectById(projectDeleteDTO.ProjectId, userId, cancellationToken);
+            var project = await _projectService.GetUserProjectById(projectDeleteDTO.Id, userId, cancellationToken);
 
             if (project is null)
             {

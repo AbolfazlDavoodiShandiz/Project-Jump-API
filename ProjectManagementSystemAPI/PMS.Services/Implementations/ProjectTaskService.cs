@@ -87,5 +87,20 @@ namespace PMS.Services.Implementations
         {
             return await _projectTaskRepository.TableNoTracking.Where(t => t.Id == id).SingleOrDefaultAsync(cancellationToken);
         }
+
+        public async Task MarkAsDone(int taskId, CancellationToken cancellationToken)
+        {
+            var task = await _projectTaskRepository.TableNoTracking.Where(t => t.Id == taskId).SingleAsync(cancellationToken);
+
+            task.Done = true;
+            task.CompleteDate = DateTime.Now;
+
+            await _projectTaskRepository.UpdateAsync(task, cancellationToken);
+        }
+
+        public async Task<bool> IsAssigned(int userId, int taskId, CancellationToken cancellationToken)
+        {
+            return await _userTaskRepository.TableNoTracking.AnyAsync(t => t.Id == taskId && t.UserId == userId, cancellationToken);
+        }
     }
 }
