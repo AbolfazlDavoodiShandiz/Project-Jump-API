@@ -25,10 +25,10 @@ namespace PMS.WebAPI.Controllers
     {
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
-        private readonly IJwtServices _jwtService;
+        private readonly IJwtService _jwtService;
         private readonly SiteSettings _siteSettings;
 
-        public AccountController(SignInManager<User> signInManager, UserManager<User> userManager, IJwtServices jwtServices, IOptionsSnapshot<SiteSettings> siteSettings)
+        public AccountController(SignInManager<User> signInManager, UserManager<User> userManager, IJwtService jwtServices, IOptionsSnapshot<SiteSettings> siteSettings)
         {
             _signInManager = signInManager;
             _userManager = userManager;

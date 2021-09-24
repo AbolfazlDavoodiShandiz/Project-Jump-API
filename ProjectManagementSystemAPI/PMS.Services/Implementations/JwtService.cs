@@ -13,12 +13,12 @@ using System.Threading.Tasks;
 
 namespace PMS.Services.Implementations
 {
-    public class JwtServices : IJwtServices
+    public class JwtService : IJwtService
     {
         private readonly SignInManager<User> _signInManager;
         private readonly SiteSettings _siteSettings;
 
-        public JwtServices(SignInManager<User> signInManager, IOptionsSnapshot<SiteSettings> siteSettings)
+        public JwtService(SignInManager<User> signInManager, IOptionsSnapshot<SiteSettings> siteSettings)
         {
             _signInManager = signInManager;
             _siteSettings = siteSettings.Value;

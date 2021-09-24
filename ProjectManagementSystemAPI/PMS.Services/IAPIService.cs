@@ -1,5 +1,4 @@
-﻿using PMS.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace PMS.Services
 {
-    public interface IJwtServices
+    public interface IAPIService
     {
-        Task<string> GenerateAsync(User user);
+        string APISimpleInfo();
     }
 }
