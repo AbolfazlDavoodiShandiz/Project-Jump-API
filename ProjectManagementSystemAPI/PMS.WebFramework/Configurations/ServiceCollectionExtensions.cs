@@ -153,6 +153,16 @@ namespace PMS.WebFramework.Configurations
                             var userId = userIdClaim.Value;
                             var user = await userManager.FindByIdAsync(userId);
 
+                            if (user.LastCreatedToken is null)
+                            {
+                                context.Fail("User not logged in.");
+                            }
+
+                            if (user.LastTokenExpireDate is not null && user.LastTokenExpireDate < DateTime.Now)
+                            {
+                                context.Fail("User last token has expired.");
+                            }
+
                             if (!user.IsActive)
                             {
                                 context.Fail("User is not active.");

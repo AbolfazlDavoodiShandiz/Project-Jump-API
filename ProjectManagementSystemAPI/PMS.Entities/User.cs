@@ -21,6 +21,8 @@ namespace PMS.Entities
         public bool IsActive { get; set; }
         public DateTime RegisterDate { get; set; }
         public DateTime? LastLoginDate { get; set; }
+        public string LastCreatedToken { get; set; }
+        public DateTime? LastTokenExpireDate { get; set; }
 
         public ICollection<Project> Projects { get; set; }
         public ICollection<ProjectTask> Tasks { get; set; }

@@ -53,7 +53,7 @@ namespace PMS.WebAPI.Controllers
 
         [HttpPost]
         [ActionName("UserLogin")]
-        public async Task<ApiResult<LoginResponseDTO>> UserLogin(UserLoginRequestDTO userLoginRequestDTO)
+        public async Task<ApiResult<LoginResponseDTO>> UserLogin(UserLoginLogoutRequestDTO userLoginRequestDTO)
         {
             var user = await _userManager.FindByEmailAsync(userLoginRequestDTO.Email);
 
@@ -70,8 +70,12 @@ namespace PMS.WebAPI.Controllers
             }
 
             var token = await _jwtService.GenerateAsync(user);
+            var tokenExpireDate = DateTime.Now.AddMinutes(_siteSettings.JwtSettings.ExpirationMinutes);
 
             user.LastLoginDate = DateTime.Now;
+            user.LastCreatedToken = token;
+            user.LastTokenExpireDate = tokenExpireDate;
+
             await _userManager.UpdateAsync(user);
 
             var loginResponseDTO = new LoginResponseDTO
@@ -79,10 +83,29 @@ namespace PMS.WebAPI.Controllers
                 Username = user.UserName,
                 Email = user.Email,
                 Token = token,
-                TokenExpirationDate = DateTime.Now.AddMinutes(_siteSettings.JwtSettings.ExpirationMinutes)
+                TokenExpirationDate = tokenExpireDate
             };
 
             return new ApiResult<LoginResponseDTO>(true, ApiResponseStatus.Success, HttpStatusCode.OK, loginResponseDTO);
+        }
+
+        [HttpPost]
+        [ActionName("UserLogout")]
+        public async Task<ApiResult> UserLogout(UserLoginLogoutRequestDTO userLoginLogoutRequestDTO)
+        {
+            var user = await _userManager.FindByEmailAsync(userLoginLogoutRequestDTO.Email);
+
+            if(user is null)
+            {
+                throw new AppException(HttpStatusCode.NotFound, "User not found.");
+            }
+
+            user.LastCreatedToken = null;
+            user.LastTokenExpireDate = null;
+
+            await _userManager.UpdateAsync(user);
+
+            return new ApiResult(true, ApiResponseStatus.Success, HttpStatusCode.OK, "User logged out successfully.");
         }
     }
 }

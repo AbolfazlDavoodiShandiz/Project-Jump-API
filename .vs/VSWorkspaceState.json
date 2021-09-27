@@ -2,8 +2,6 @@
   "ExpandedNodes": [
     "",
     "\\ProjectManagementSystemAPI",
-    "\\ProjectManagementSystemAPI\\PMS.Entities",
-    "\\ProjectManagementSystemAPI\\PMS.WebAPI",
     "\\ProjectManagementSystemAPI\\PMS.WebAPI\\Controllers"
   ],
   "SelectedNode": "\\ProjectManagementSystemAPI\\ProjectManagementSystemAPI.sln",
