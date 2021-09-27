@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PMS.DTO
 {
-    public class UserLoginLogoutRequestDTO
+    public class UserLoginRequestDTO
     {
         [Required]
         public string Email { get; set; }

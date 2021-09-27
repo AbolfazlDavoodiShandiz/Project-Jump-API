@@ -53,7 +53,7 @@ namespace PMS.WebAPI.Controllers
 
         [HttpPost]
         [ActionName("UserLogin")]
-        public async Task<ApiResult<LoginResponseDTO>> UserLogin(UserLoginLogoutRequestDTO userLoginRequestDTO)
+        public async Task<ApiResult<LoginResponseDTO>> UserLogin(UserLoginRequestDTO userLoginRequestDTO)
         {
             var user = await _userManager.FindByEmailAsync(userLoginRequestDTO.Email);
 
@@ -91,9 +91,9 @@ namespace PMS.WebAPI.Controllers
 
         [HttpPost]
         [ActionName("UserLogout")]
-        public async Task<ApiResult> UserLogout(UserLoginLogoutRequestDTO userLoginLogoutRequestDTO)
+        public async Task<ApiResult> UserLogout(UserEmailDTO userEmailDTO)
         {
-            var user = await _userManager.FindByEmailAsync(userLoginLogoutRequestDTO.Email);
+            var user = await _userManager.FindByEmailAsync(userEmailDTO.Email);
 
             if(user is null)
             {
