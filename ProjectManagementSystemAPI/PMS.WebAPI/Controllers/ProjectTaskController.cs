@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace PMS.WebAPI.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/projecttask/[action]")]
     [ApiController]
     public class ProjectTaskController : ControllerBase
     {

@@ -14,6 +14,7 @@ namespace PMS.DTO
         public DateTime CreatedDate { get; internal set; }
         public DateTime DeadlineDate { get; set; }
         public int UserId { get; set; }
+        public bool Finished { get; set; }
 
         public IEnumerable<ProjectTaskDTO> Tasks { get; set; }
     }

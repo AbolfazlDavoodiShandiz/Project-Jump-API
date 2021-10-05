@@ -13,12 +13,14 @@ namespace PMS.Entities
         public Project()
         {
             CreatedDate = DateTime.Now;
+            Finished = false;
         }
 
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime CreatedDate { get; internal set; }
         public DateTime DeadlineDate { get; set; }
+        public bool Finished { get; set; }
 
         public User Owner { get; set; }
         public int OwnerId { get; set; }

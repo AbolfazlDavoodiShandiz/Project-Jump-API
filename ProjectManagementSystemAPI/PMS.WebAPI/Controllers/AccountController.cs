@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace PMS.WebAPI.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/account/[action]")]
     [ApiController]
     [AllowAnonymous]
     public class AccountController : ControllerBase
@@ -53,7 +53,7 @@ namespace PMS.WebAPI.Controllers
 
         [HttpPost]
         [ActionName("UserLogin")]
-        public async Task<ApiResult<LoginResponseDTO>> UserLogin(UserLoginRequestDTO userLoginRequestDTO)
+        public async Task<ApiResult<UserLoginResponseDTO>> UserLogin(UserLoginRequestDTO userLoginRequestDTO)
         {
             var user = await _userManager.FindByEmailAsync(userLoginRequestDTO.Email);
 
@@ -71,6 +71,13 @@ namespace PMS.WebAPI.Controllers
 
             var token = await _jwtService.GenerateAsync(user);
             var tokenExpireDate = DateTime.Now.AddMinutes(_siteSettings.JwtSettings.ExpirationMinutes);
+            var userClaimPrincipal = await _signInManager.ClaimsFactory.CreateAsync(user);
+            var userClaims = new Dictionary<string, object>();
+
+            foreach (var claim in userClaimPrincipal.Claims)
+            {
+                userClaims.Add(claim.Type, claim.Value);
+            }
 
             user.LastLoginDate = DateTime.Now;
             user.LastCreatedToken = token;
@@ -78,15 +85,17 @@ namespace PMS.WebAPI.Controllers
 
             await _userManager.UpdateAsync(user);
 
-            var loginResponseDTO = new LoginResponseDTO
+            var loginResponseDTO = new UserLoginResponseDTO
             {
                 Username = user.UserName,
+                DisplayName = user.DisplayName,
                 Email = user.Email,
+                UserClaims = userClaims,
                 Token = token,
                 TokenExpirationDate = tokenExpireDate
             };
 
-            return new ApiResult<LoginResponseDTO>(true, ApiResponseStatus.Success, HttpStatusCode.OK, loginResponseDTO);
+            return new ApiResult<UserLoginResponseDTO>(true, ApiResponseStatus.Success, HttpStatusCode.OK, loginResponseDTO);
         }
 
         [HttpPost]
@@ -95,7 +104,7 @@ namespace PMS.WebAPI.Controllers
         {
             var user = await _userManager.FindByEmailAsync(userEmailDTO.Email);
 
-            if(user is null)
+            if (user is null)
             {
                 throw new AppException(HttpStatusCode.NotFound, "User not found.");
             }
