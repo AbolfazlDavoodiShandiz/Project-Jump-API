@@ -31,9 +31,9 @@ namespace PMS.Services.Implementations
             await _projectTaskRepository.AddAsync(projectTask, cancellationToken);
         }
 
-        public Task DeleteTask(ProjectTask projectTask, CancellationToken cancellationToken)
+        public async Task DeleteTask(ProjectTask projectTask, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            await _projectTaskRepository.DeleteAsync(projectTask, cancellationToken);
         }
 
         public Task EditProjectTask(ProjectTask projectTask, CancellationToken cancellationToken)
@@ -101,6 +101,16 @@ namespace PMS.Services.Implementations
         public async Task<bool> IsAssigned(int userId, int taskId, CancellationToken cancellationToken)
         {
             return await _userTaskRepository.TableNoTracking.AnyAsync(t => t.Id == taskId && t.UserId == userId, cancellationToken);
+        }
+
+        public async Task DeleteAssignedProjectTask(UserTask userTask, CancellationToken cancellationToken)
+        {
+            await _userTaskRepository.DeleteAsync(userTask, cancellationToken);
+        }
+
+        public async Task DeleteAssignedProjectTaskInRange(IEnumerable<UserTask> userTasks, CancellationToken cancellationToken)
+        {
+            await _userTaskRepository.DeleteRangeAsync(userTasks, cancellationToken);
         }
     }
 }

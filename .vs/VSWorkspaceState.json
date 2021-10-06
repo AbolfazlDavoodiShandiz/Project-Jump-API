@@ -8,6 +8,6 @@
     "\\ProjectManagementSystemAPI\\PMS.WebFramework",
     "\\ProjectManagementSystemAPI\\PMS.WebFramework\\CustomMiddlewares"
   ],
-  "SelectedNode": "\\ProjectManagementSystemAPI\\PMS.DTO\\ProjectDTO.cs",
+  "SelectedNode": "\\ProjectManagementSystemAPI\\PMS.WebAPI\\Controllers\\ProjectController.cs",
   "PreviewInSolutionExplorer": false
 }

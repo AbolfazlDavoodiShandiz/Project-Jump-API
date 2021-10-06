@@ -13,7 +13,6 @@ D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSys
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Services\obj\Debug\net5.0\PMS.Services.AssemblyInfoInputs.cache
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Services\obj\Debug\net5.0\PMS.Services.AssemblyInfo.cs
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Services\obj\Debug\net5.0\PMS.Services.csproj.CoreCompileInputs.cache
-D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Services\obj\Debug\net5.0\PMS.Services.csproj.CopyComplete
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Services\obj\Debug\net5.0\PMS.Services.dll
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Services\obj\Debug\net5.0\ref\PMS.Services.dll
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Services\obj\Debug\net5.0\PMS.Services.pdb

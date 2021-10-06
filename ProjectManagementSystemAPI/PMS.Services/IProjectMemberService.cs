@@ -11,6 +11,8 @@ namespace PMS.Services
     public interface IProjectMemberService
     {
         Task AddProjectMember(ProjectMember projectMember, CancellationToken cancellationToken);
+        Task DeleteProjectMember(ProjectMember projectMember, CancellationToken cancellationToken);
+        Task DeleteProjectMemberInRange(IEnumerable<ProjectMember> projectMembers, CancellationToken cancellationToken);
         Task<bool> IsProjectMember(int userId, int projectId, CancellationToken cancellationToken);
     }
 }

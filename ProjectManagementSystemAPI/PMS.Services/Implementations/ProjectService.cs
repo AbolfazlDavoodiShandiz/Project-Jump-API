@@ -13,10 +13,16 @@ namespace PMS.Services.Implementations
     public class ProjectService : IProjectService
     {
         private readonly IRepository<Project> _projectRepository;
+        private readonly IRepository<ProjectTask> _projectTaskRepository;
+        private readonly IRepository<UserTask> _userTaskRepository;
+        private readonly IRepository<ProjectMember> _projectMemberRepository;
 
-        public ProjectService(IRepository<Project> projectRepository)
+        public ProjectService(IRepository<Project> projectRepository, IRepository<ProjectTask> projectTaskRepository, IRepository<UserTask> userTaskRepository, IRepository<ProjectMember> projectMemberRepository)
         {
             _projectRepository = projectRepository;
+            _projectTaskRepository = projectTaskRepository;
+            _userTaskRepository = userTaskRepository;
+            _projectMemberRepository = projectMemberRepository;
         }
 
         public async Task CreateProject(Project project, CancellationToken cancellationToken)
@@ -26,6 +32,15 @@ namespace PMS.Services.Implementations
 
         public async Task DeleteProject(Project project, CancellationToken cancellationToken)
         {
+            int projectId = project.Id;
+
+            var projectMemberList = await _projectMemberRepository.TableNoTracking.Where(pm => pm.ProjectId == projectId).ToListAsync();
+            var projectTaskList = await _projectTaskRepository.TableNoTracking.Where(pt => pt.ProjectId == projectId).ToListAsync();
+            var userTaskList = await _userTaskRepository.TableNoTracking.Where(ut => projectTaskList.Contains(ut.ProjectTask)).ToListAsync();
+
+            await _userTaskRepository.DeleteRangeAsync(userTaskList, cancellationToken);
+            await _projectTaskRepository.DeleteRangeAsync(projectTaskList, cancellationToken);
+            await _projectMemberRepository.DeleteRangeAsync(projectMemberList, cancellationToken);
             await _projectRepository.DeleteAsync(project, cancellationToken);
         }
 
