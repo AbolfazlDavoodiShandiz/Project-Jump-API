@@ -34,9 +34,20 @@ namespace PMS.Services.Implementations
             await _projectMemberRepository.DeleteRangeAsync(projectMembers, cancellationToken);
         }
 
+        public async Task<IEnumerable<ProjectMember>> GetProjectMembers(int projectId, CancellationToken cancellationToken)
+        {
+            return await _projectMemberRepository
+                .TableNoTracking
+                .Where(pm => pm.ProjectId == projectId && !pm.IsProjectOwner)
+                .Include(pm => pm.User)
+                .ToListAsync(cancellationToken);
+        }
+
         public async Task<bool> IsProjectMember(int userId, int projectId, CancellationToken cancellationToken)
         {
-            return await _projectMemberRepository.TableNoTracking.AnyAsync(m => m.ProjectId == projectId && m.UserId == userId, cancellationToken);
+            return await _projectMemberRepository
+                .TableNoTracking
+                .AnyAsync(m => m.ProjectId == projectId && m.UserId == userId, cancellationToken);
         }
     }
 }

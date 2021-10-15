@@ -23,13 +23,15 @@ namespace PMS.WebAPI.Controllers
     {
         private readonly IProjectService _projectService;
         private readonly IProjectMemberService _projectMemberService;
+        private readonly IProjectTaskService _projectTaskService;
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
 
-        public ProjectController(IProjectService projectService, IProjectMemberService projectMemberService, UserManager<User> userManager, IMapper mapper)
+        public ProjectController(IProjectService projectService, IProjectMemberService projectMemberService, IProjectTaskService projectTaskService, UserManager<User> userManager, IMapper mapper)
         {
             _projectService = projectService;
             _projectMemberService = projectMemberService;
+            _projectTaskService = projectTaskService;
             _userManager = userManager;
             _mapper = mapper;
         }
@@ -140,6 +142,39 @@ namespace PMS.WebAPI.Controllers
             {
                 throw new AppException(HttpStatusCode.NotFound, "This user email doesn't exist.There is no user with this email.");
             }
+        }
+
+        [HttpGet("{projectTitle}")]
+        [ActionName("GetProjectSummary")]
+        public async Task<ApiResult<ProjectSummaryDTO>> GetProjectSummary(string projectTitle, CancellationToken cancellationToken)
+        {
+            var project = await _projectService.Get(projectTitle, cancellationToken);
+
+            if (project is null)
+            {
+                throw new AppException(HttpStatusCode.NotFound, "Project not found.");
+            }
+
+            var projectTasks = await _projectTaskService.GetAllByProjectId(project.Id, cancellationToken);
+            var projectMember = await _projectMemberService.GetProjectMembers(project.Id, cancellationToken);
+
+            ProjectSummaryDTO projectSummaryDTO = new ProjectSummaryDTO();
+            projectSummaryDTO.ProjectId = project.Id;
+            projectSummaryDTO.ProjectTitle = project.Title;
+            projectSummaryDTO.ProjectDeadlineDate = project.DeadlineDate;
+
+            if (projectTasks is not null && projectTasks.Count() > 0)
+            {
+                projectSummaryDTO.ProjectTasks = _mapper.Map<IEnumerable<ProjectTaskDTO>>(projectTasks);
+            }
+
+            if(projectMember is not null && projectMember.Count() > 0)
+            {
+                var members = projectMember.Select(pm => pm.User).ToList();
+                projectSummaryDTO.ProjectMembers = _mapper.Map<IEnumerable<ProjectMemberDTO>>(members);
+            }
+
+            return Ok(projectSummaryDTO);
         }
     }
 }

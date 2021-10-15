@@ -56,14 +56,28 @@ namespace PMS.Services.Implementations
             return exists;
         }
 
+        public async Task<Project> Get(string projectTitle, CancellationToken cancellationToken)
+        {
+            return await _projectRepository.TableNoTracking
+                .Where(p => p.Title == projectTitle)
+                .SingleOrDefaultAsync(cancellationToken);
+        }
+
         public async Task<IEnumerable<Project>> GetAllByUserId(int userId, CancellationToken cancellationToken)
         {
-            return await _projectRepository.TableNoTracking.Where(p => p.OwnerId == userId).Include(p => p.Tasks).ToListAsync(cancellationToken);
+            return await _projectRepository
+                .TableNoTracking
+                .Where(p => p.OwnerId == userId)
+                .Include(p => p.Tasks)
+                .ToListAsync(cancellationToken);
         }
 
         public async Task<Project> GetUserProjectById(int projectId, int userId, CancellationToken cancellationToken)
         {
-            return await _projectRepository.TableNoTracking.Where(p => p.Id == projectId && p.OwnerId == userId).SingleOrDefaultAsync(cancellationToken);
+            return await _projectRepository
+                .TableNoTracking
+                .Where(p => p.Id == projectId && p.OwnerId == userId)
+                .SingleOrDefaultAsync(cancellationToken);
         }
     }
 }

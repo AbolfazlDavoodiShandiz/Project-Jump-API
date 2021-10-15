@@ -153,7 +153,8 @@ namespace PMS.WebAPI.Controllers
             var userTask = new UserTask
             {
                 UserId = projectTaskAssignToMemberDTO.UserId,
-                TaskId = projectTaskAssignToMemberDTO.TaskId
+                TaskId = projectTaskAssignToMemberDTO.TaskId,
+                RegisterUserId = User.Identity.GetUserId()
             };
 
             await _projectTaskService.AssignProjectTaskToProjectMember(userTask, cancellationToken);

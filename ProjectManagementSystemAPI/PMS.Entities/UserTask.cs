@@ -13,5 +13,7 @@ namespace PMS.Entities
 
         public ProjectTask ProjectTask { get; set; }
         public int TaskId { get; set; }
+
+        public int RegisterUserId { get; set; }
     }
 }

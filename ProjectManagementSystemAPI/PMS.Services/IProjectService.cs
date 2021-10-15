@@ -7,6 +7,7 @@ namespace PMS.Services
 {
     public interface IProjectService
     {
+        Task<Project> Get(string projectTitle, CancellationToken cancellationToken);
         Task<IEnumerable<Project>> GetAllByUserId(int userId, CancellationToken cancellationToken);
         Task<Project> GetUserProjectById(int projectId, int userId, CancellationToken cancellationToken);
         Task CreateProject(Project project, CancellationToken cancellationToken);

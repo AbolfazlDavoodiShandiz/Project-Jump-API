@@ -14,5 +14,6 @@ namespace PMS.Services
         Task DeleteProjectMember(ProjectMember projectMember, CancellationToken cancellationToken);
         Task DeleteProjectMemberInRange(IEnumerable<ProjectMember> projectMembers, CancellationToken cancellationToken);
         Task<bool> IsProjectMember(int userId, int projectId, CancellationToken cancellationToken);
+        Task<IEnumerable<ProjectMember>> GetProjectMembers(int projectId, CancellationToken cancellationToken);
     }
 }

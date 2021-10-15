@@ -17,6 +17,13 @@ namespace PMS.WebFramework.AutoMapperProfile
             CreateMap<Project, ProjectRegistrationDTO>().ReverseMap();
             CreateMap<ProjectTask, ProjectTaskDTO>().ReverseMap();
             CreateMap<ProjectTask, ProjectTaskRegistrationDTO>().ReverseMap();
+            CreateMap<User, ProjectMemberDTO>().ForMember(pmd => pmd.UserId, opt =>
+            {
+                opt.MapFrom(pms => pms.Id);
+            }).ForMember(pmd => pmd.Mobile, opt =>
+            {
+                opt.MapFrom(pms => pms.PhoneNumber);
+            }).ReverseMap();
         }
     }
 }
