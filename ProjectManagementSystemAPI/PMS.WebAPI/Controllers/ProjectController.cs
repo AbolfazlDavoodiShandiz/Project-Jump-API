@@ -168,13 +168,42 @@ namespace PMS.WebAPI.Controllers
                 projectSummaryDTO.ProjectTasks = _mapper.Map<IEnumerable<ProjectTaskDTO>>(projectTasks);
             }
 
-            if(projectMember is not null && projectMember.Count() > 0)
+            if (projectMember is not null && projectMember.Count() > 0)
             {
                 var members = projectMember.Select(pm => pm.User).ToList();
                 projectSummaryDTO.ProjectMembers = _mapper.Map<IEnumerable<ProjectMemberDTO>>(members);
             }
 
             return Ok(projectSummaryDTO);
+        }
+
+        [HttpGet("{projectTitle}")]
+        [ActionName("GetProjectTasks")]
+        public async Task<ApiResult<IEnumerable<ProjectTaskDTO>>> GetProjectTasks(string projectTitle, CancellationToken cancellationToken)
+        {
+            var userId = User.Identity.GetUserId();
+            var project = await _projectService.Get(projectTitle, cancellationToken);
+
+            if (project is null)
+            {
+                throw new AppException(HttpStatusCode.NotFound, "Project not found.");
+            }
+
+            if (project.OwnerId != userId)
+            {
+                throw new AppException(HttpStatusCode.BadRequest, "You are not the owner of this project.");
+            }
+
+            var taskList = await _projectTaskService.GetAllByProjectId(project.Id, cancellationToken);
+
+            if (taskList is null)
+            {
+                throw new AppException(HttpStatusCode.NotFound, "There is no task for this project");
+            }
+
+            var tasks = _mapper.Map<IEnumerable<ProjectTaskDTO>>(taskList);
+
+            return Ok(tasks);
         }
     }
 }

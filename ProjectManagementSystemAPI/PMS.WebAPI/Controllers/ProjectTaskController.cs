@@ -48,6 +48,48 @@ namespace PMS.WebAPI.Controllers
             return new ApiResult(true, ApiResponseStatus.Success, HttpStatusCode.OK, "Project task created successfully.");
         }
 
+        [HttpPost]
+        [ActionName("EditProjectTask")]
+        public async Task<ApiResult> EditProjectTask(ProjectTaskEditDTO projectTaskEditDTO, CancellationToken cancellationToken)
+        {
+            var userId = User.Identity.GetUserId();
+            var task = await _projectTaskService.GetByIdAsync(projectTaskEditDTO.TaskId, cancellationToken);
+
+            if (task is null)
+            {
+                throw new AppException(HttpStatusCode.NotFound, "There is no task with this data.");
+            }
+
+            if (task.OwnerId != userId)
+            {
+                throw new AppException(HttpStatusCode.BadRequest, "You are not authorized to perform this action.");
+            }
+
+            task.Description = projectTaskEditDTO.Description;
+            task.DeadlineDate = projectTaskEditDTO.DeadlineDate;
+
+            await _projectTaskService.EditProjectTask(task, cancellationToken);
+
+            return new ApiResult(true, ApiResponseStatus.Success, HttpStatusCode.OK, "Task updated successfully.");
+        }
+
+        [HttpPost]
+        [ActionName("DeleteProjectTask")]
+        public async Task<ApiResult> DeleteProjectTask(EntityIdDTO taskId, CancellationToken cancellationToken)
+        {
+            var userId = User.Identity.GetUserId();
+            var task = await _projectTaskService.GetByIdAsync(taskId.Id, cancellationToken);
+
+            if (task.OwnerId != userId)
+            {
+                throw new AppException(HttpStatusCode.BadRequest, "You are not authorized to perform this action.");
+            }
+
+            await _projectTaskService.DeleteTask(task, cancellationToken);
+
+            return new ApiResult(true, ApiResponseStatus.Success, HttpStatusCode.OK, "Task deleted successfully");
+        }
+
         [HttpGet]
         [ActionName("UserCreatedTaskList")]
         public async Task<ApiResult<IEnumerable<ProjectTaskDTO>>> UserCreatedTaskList(CancellationToken cancellationToken)
@@ -167,12 +209,16 @@ namespace PMS.WebAPI.Controllers
         public async Task<ApiResult> MarkTaskAsDone(EntityIdDTO TaskDoneDTO, CancellationToken cancellationToken)
         {
             var userId = User.Identity.GetUserId();
+            var task = await _projectTaskService.GetByIdAsync(TaskDoneDTO.Id, cancellationToken);
 
-            var isAssigned = await _projectTaskService.IsAssigned(userId, TaskDoneDTO.Id, cancellationToken);
-
-            if (!isAssigned)
+            if (task.OwnerId != userId)
             {
-                throw new AppException(HttpStatusCode.NotFound, "Task id or user id is incorrect or this task isn't assigned to this user.");
+                var isAssigned = await _projectTaskService.IsAssigned(userId, TaskDoneDTO.Id, cancellationToken);
+
+                if (!isAssigned)
+                {
+                    throw new AppException(HttpStatusCode.NotFound, "Task id or user id is incorrect or this task isn't assigned to this user.");
+                }
             }
 
             await _projectTaskService.MarkAsDone(TaskDoneDTO.Id, cancellationToken);

@@ -36,9 +36,9 @@ namespace PMS.Services.Implementations
             await _projectTaskRepository.DeleteAsync(projectTask, cancellationToken);
         }
 
-        public Task EditProjectTask(ProjectTask projectTask, CancellationToken cancellationToken)
+        public async Task EditProjectTask(ProjectTask projectTask, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            await _projectTaskRepository.UpdateAsync(projectTask, cancellationToken);
         }
 
         public async Task<IEnumerable<ProjectTask>> GetAllByUserId(int userId, CancellationToken cancellationToken,
