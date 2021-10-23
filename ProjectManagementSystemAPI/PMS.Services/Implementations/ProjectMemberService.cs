@@ -46,14 +46,16 @@ namespace PMS.Services.Implementations
             }
         }
 
-        public async Task DeleteProjectMember(ProjectMember projectMember, CancellationToken cancellationToken)
+        public async Task DeleteProjectMember(int projectId, int userId, CancellationToken cancellationToken)
         {
-            await _projectMemberRepository.DeleteAsync(projectMember, cancellationToken);
-        }
+            var projectMember = await _projectMemberRepository.Table
+                .Where(m => m.UserId == userId && m.ProjectId == projectId)
+                .SingleOrDefaultAsync(cancellationToken);
 
-        public async Task DeleteProjectMemberInRange(IEnumerable<ProjectMember> projectMembers, CancellationToken cancellationToken)
-        {
-            await _projectMemberRepository.DeleteRangeAsync(projectMembers, cancellationToken);
+            if (projectMember is not null)
+            {
+                await _projectMemberRepository.DeleteAsync(projectMember, cancellationToken);
+            }
         }
 
         public async Task<IEnumerable<ProjectMember>> GetProjectMembers(int projectId, CancellationToken cancellationToken)

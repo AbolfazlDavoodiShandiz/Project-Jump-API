@@ -288,11 +288,7 @@ namespace PMS.WebAPI.Controllers
                 throw new AppException(HttpStatusCode.NotFound, "No user found.");
             }
 
-            await _projectMemberService.DeleteProjectMember(new ProjectMember
-            {
-                ProjectId = project.Id,
-                UserId = user.Id
-            }, cancellationToken);
+            await _projectMemberService.DeleteProjectMember(project.Id, user.Id, cancellationToken);
 
             return new ApiResult(true, ApiResponseStatus.Success, HttpStatusCode.OK, "Project member deleted successfully.");
         }

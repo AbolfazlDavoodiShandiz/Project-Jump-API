@@ -12,8 +12,7 @@ namespace PMS.Services
     {
         Task AddProjectMember(ProjectMember projectMember, CancellationToken cancellationToken);
         Task AddProjectMember(List<ProjectMember> projectMembers, CancellationToken cancellationToken);
-        Task DeleteProjectMember(ProjectMember projectMember, CancellationToken cancellationToken);
-        Task DeleteProjectMemberInRange(IEnumerable<ProjectMember> projectMembers, CancellationToken cancellationToken);
+        Task DeleteProjectMember(int projectId, int userId, CancellationToken cancellationToken);
         Task<bool> IsProjectMember(int userId, int projectId, CancellationToken cancellationToken);
         Task<IEnumerable<ProjectMember>> GetProjectMembers(int projectId, CancellationToken cancellationToken);
     }
