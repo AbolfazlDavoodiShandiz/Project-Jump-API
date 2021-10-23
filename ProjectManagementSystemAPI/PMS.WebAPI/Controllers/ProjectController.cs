@@ -205,5 +205,96 @@ namespace PMS.WebAPI.Controllers
 
             return Ok(tasks);
         }
+
+        [HttpGet("{projectTitle}")]
+        [ActionName("GetProjectMembers")]
+        public async Task<ApiResult<IEnumerable<ProjectMemberDTO>>> GetProjectMembers(string projectTitle, CancellationToken cancellationToken)
+        {
+            var userId = User.Identity.GetUserId();
+            var project = await _projectService.Get(projectTitle, cancellationToken);
+
+            if (project is null)
+            {
+                throw new AppException(HttpStatusCode.NotFound, "Project not found.");
+            }
+
+            var memberList = await _projectMemberService.GetProjectMembers(project.Id, cancellationToken);
+
+            if (memberList is null)
+            {
+                throw new AppException(HttpStatusCode.NotFound, "There is no member for this project");
+            }
+
+            var members = memberList.Select(pm => pm.User).ToList();
+
+            var membersDTO = _mapper.Map<IEnumerable<ProjectMemberDTO>>(members);
+
+            return Ok(membersDTO);
+        }
+
+        [HttpPost]
+        [ActionName("AddProjectMember")]
+        public async Task<ApiResult> AddProjectMember(List<ProjectMemberRegisterDTO> projectMemberRegisterDTO, CancellationToken cancellationToken)
+        {
+            if (projectMemberRegisterDTO is null || projectMemberRegisterDTO.Count == 0)
+            {
+                throw new AppException(HttpStatusCode.BadRequest, "There is no data from client.");
+            }
+
+            var projectExists = await _projectService.ExistsById(projectMemberRegisterDTO[0].ProjectId, cancellationToken);
+
+            if (!projectExists)
+            {
+                throw new AppException(HttpStatusCode.NotFound, "Project not found.");
+            }
+
+            var memberList = new List<ProjectMember>();
+
+            projectMemberRegisterDTO.ForEach(m =>
+            {
+                memberList.Add(new ProjectMember { ProjectId = m.ProjectId, UserId = m.UserId });
+            });
+
+            if (memberList.Count == 1 && memberList[0].UserId == User.Identity.GetUserId())
+            {
+                throw new AppException(HttpStatusCode.BadRequest, "Owner of project is a project member.");
+            }
+
+            await _projectMemberService.AddProjectMember(memberList, cancellationToken);
+
+            return new ApiResult(true, ApiResponseStatus.Success, HttpStatusCode.OK, "Project member(s) added successfully.");
+        }
+
+        [HttpPost]
+        [ActionName("DeleteProjectMember")]
+        public async Task<ApiResult> DeleteProjectMember(ProjectMemberDeleteDTO projectMemberDeleteDTO, CancellationToken cancellationToken)
+        {
+            if (projectMemberDeleteDTO is null)
+            {
+                throw new AppException(HttpStatusCode.BadRequest, "There is no data from client.");
+            }
+
+            var project = await _projectService.Get(projectMemberDeleteDTO.ProjectName, cancellationToken);
+
+            if (project is null)
+            {
+                throw new AppException(HttpStatusCode.NotFound, "No project found.");
+            }
+
+            var user = await _userManager.FindByEmailAsync(projectMemberDeleteDTO.UserEmail);
+
+            if (project is null)
+            {
+                throw new AppException(HttpStatusCode.NotFound, "No user found.");
+            }
+
+            await _projectMemberService.DeleteProjectMember(new ProjectMember
+            {
+                ProjectId = project.Id,
+                UserId = user.Id
+            }, cancellationToken);
+
+            return new ApiResult(true, ApiResponseStatus.Success, HttpStatusCode.OK, "Project member deleted successfully.");
+        }
     }
 }

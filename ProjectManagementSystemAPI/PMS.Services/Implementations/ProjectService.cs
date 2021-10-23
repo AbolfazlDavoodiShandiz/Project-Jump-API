@@ -49,6 +49,13 @@ namespace PMS.Services.Implementations
             await _projectRepository.UpdateAsync(project, cancellationToken);
         }
 
+        public async Task<bool> ExistsById(int id, CancellationToken cancellationToken)
+        {
+            var exists = await _projectRepository.TableNoTracking.AnyAsync(p => p.Id == id, cancellationToken);
+
+            return exists;
+        }
+
         public async Task<bool> ExistsByTitle(string name, CancellationToken cancellationToken)
         {
             var exists = await _projectRepository.TableNoTracking.AnyAsync(p => p.Title == name, cancellationToken);
@@ -61,6 +68,13 @@ namespace PMS.Services.Implementations
             return await _projectRepository.TableNoTracking
                 .Where(p => p.Title == projectTitle)
                 .SingleOrDefaultAsync(cancellationToken);
+        }
+
+        public async Task<Project> Get(int projectId, CancellationToken cancellationToken)
+        {
+            return await _projectRepository.TableNoTracking
+                    .Where(p => p.Id == projectId)
+                    .SingleOrDefaultAsync(cancellationToken);
         }
 
         public async Task<IEnumerable<Project>> GetAllByUserId(int userId, CancellationToken cancellationToken)

@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using PMS.Common;
 using PMS.Common.Enums;
@@ -14,30 +16,34 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PMS.WebAPI.Controllers
 {
     [Route("api/account/[action]")]
     [ApiController]
-    [AllowAnonymous]
     public class AccountController : ControllerBase
     {
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly IJwtService _jwtService;
         private readonly SiteSettings _siteSettings;
+        private readonly IMapper _mapper;
 
-        public AccountController(SignInManager<User> signInManager, UserManager<User> userManager, IJwtService jwtServices, IOptionsSnapshot<SiteSettings> siteSettings)
+        public AccountController(SignInManager<User> signInManager, UserManager<User> userManager,
+            IJwtService jwtServices, IOptionsSnapshot<SiteSettings> siteSettings, IMapper mapper)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _jwtService = jwtServices;
             _siteSettings = siteSettings.Value;
+            _mapper = mapper;
         }
 
         [HttpPost]
         [ActionName("UserRegister")]
+        [AllowAnonymous]
         public async Task<ApiResult> UserRegister(UserRegistrationDTO userRegistrationDTO)
         {
             var user = new User
@@ -53,6 +59,7 @@ namespace PMS.WebAPI.Controllers
 
         [HttpPost]
         [ActionName("UserLogin")]
+        [AllowAnonymous]
         public async Task<ApiResult<UserLoginResponseDTO>> UserLogin(UserLoginRequestDTO userLoginRequestDTO)
         {
             var user = await _userManager.FindByEmailAsync(userLoginRequestDTO.Email);
@@ -115,6 +122,17 @@ namespace PMS.WebAPI.Controllers
             await _userManager.UpdateAsync(user);
 
             return new ApiResult(true, ApiResponseStatus.Success, HttpStatusCode.OK, "User logged out successfully.");
+        }
+
+        [HttpGet("{email}")]
+        [ActionName("SearchUserByEmail")]
+        public async Task<ApiResult<IEnumerable<UserSearchResponseDTO>>> SearchUserByEmail(string email, CancellationToken cancellationToken)
+        {
+            var users = await _userManager.Users.Where(u => u.Email.Contains(email)).ToListAsync(cancellationToken);
+
+            var result = _mapper.Map<IEnumerable<UserSearchResponseDTO>>(users);
+
+            return Ok(result);
         }
     }
 }

@@ -21,7 +21,29 @@ namespace PMS.Services.Implementations
 
         public async Task AddProjectMember(ProjectMember projectMember, CancellationToken cancellationToken)
         {
-            await _projectMemberRepository.AddAsync(projectMember, cancellationToken);
+            var exists = await _projectMemberRepository.TableNoTracking
+                .Where(pm => pm.ProjectId == projectMember.ProjectId && pm.UserId == projectMember.UserId)
+                .AnyAsync(cancellationToken);
+
+            if (!exists)
+            {
+                await _projectMemberRepository.AddAsync(projectMember, cancellationToken);
+            }
+        }
+
+        public async Task AddProjectMember(List<ProjectMember> projectMembers, CancellationToken cancellationToken)
+        {
+            foreach (var item in projectMembers)
+            {
+                var exists = await _projectMemberRepository.TableNoTracking
+                    .Where(pm => pm.ProjectId == item.ProjectId && pm.UserId == item.UserId)
+                    .AnyAsync(cancellationToken);
+
+                if (!exists)
+                {
+                    await _projectMemberRepository.AddAsync(item, cancellationToken);
+                }
+            }
         }
 
         public async Task DeleteProjectMember(ProjectMember projectMember, CancellationToken cancellationToken)
