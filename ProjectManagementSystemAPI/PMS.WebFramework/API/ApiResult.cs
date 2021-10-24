@@ -30,6 +30,13 @@ namespace PMS.WebFramework.API
                 return ApiResponseStatus.ToString();
             }
         }
+        public int HttpStatusCodeNumber
+        {
+            get
+            {
+                return (int)HttpStatusCode;
+            }
+        }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Message { get; set; }

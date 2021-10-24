@@ -19,6 +19,13 @@ namespace PMS.Common.Utility
         }
 
         public HttpStatusCode HttpStatusCode { get; }
+        public int HttpStatusCodeNumber
+        {
+            get
+            {
+                return (int)HttpStatusCode;
+            }
+        }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public object AdditionalData { get; }
