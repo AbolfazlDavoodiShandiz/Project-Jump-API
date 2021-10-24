@@ -1,15 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\ProjectManagementSystemAPI",
-    "\\ProjectManagementSystemAPI\\PMS.DTO",
-    "\\ProjectManagementSystemAPI\\PMS.WebAPI",
-    "\\ProjectManagementSystemAPI\\PMS.WebAPI\\Controllers",
-    "\\ProjectManagementSystemAPI\\PMS.WebFramework",
-    "\\ProjectManagementSystemAPI\\PMS.WebFramework\\AutoMapperProfile",
-    "\\ProjectManagementSystemAPI\\PMS.WebFramework\\Configurations",
-    "\\ProjectManagementSystemAPI\\PMS.WebFramework\\CustomMiddlewares"
+    ""
   ],
-  "SelectedNode": "\\ProjectManagementSystemAPI\\ProjectManagementSystemAPI.sln",
+  "SelectedNode": "\\ProjectManagementSystemAPI.sln",
   "PreviewInSolutionExplorer": false
 }

@@ -49,7 +49,8 @@ namespace PMS.WebAPI.Controllers
             var user = new User
             {
                 Email = userRegistrationDTO.Email,
-                UserName = userRegistrationDTO.Username
+                UserName = userRegistrationDTO.Username,
+                PhoneNumber=userRegistrationDTO.Mobile
             };
 
             var result = await _userManager.CreateAsync(user, userRegistrationDTO.Password);

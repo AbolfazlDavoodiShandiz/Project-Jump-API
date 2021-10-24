@@ -29,7 +29,6 @@ D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSys
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.WebAPI\obj\Debug\net5.0\PMS.WebAPI.MvcApplicationPartsAssemblyInfo.cs
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.WebAPI\obj\Debug\net5.0\PMS.WebAPI.MvcApplicationPartsAssemblyInfo.cache
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.WebAPI\obj\Debug\net5.0\staticwebassets\PMS.WebAPI.StaticWebAssets.Manifest.cache
-D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.WebAPI\obj\Debug\net5.0\staticwebassets\PMS.WebAPI.StaticWebAssets.xml
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.WebAPI\obj\Debug\net5.0\scopedcss\bundle\PMS.WebAPI.styles.css
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.WebAPI\obj\Debug\net5.0\PMS.WebAPI.RazorTargetAssemblyInfo.cache
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.WebAPI\obj\Debug\net5.0\PMS.WebAPI.dll
