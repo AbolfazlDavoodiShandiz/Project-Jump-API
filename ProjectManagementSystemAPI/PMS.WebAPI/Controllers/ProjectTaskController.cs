@@ -171,12 +171,7 @@ namespace PMS.WebAPI.Controllers
         [ActionName("AssignTaskToProjectMember")]
         public async Task<ApiResult> AssignTaskToProjectMember(ProjectTaskAssignToMemberDTO projectTaskAssignToMemberDTO, CancellationToken cancellationToken)
         {
-            var user = await _userManager.FindByIdAsync(projectTaskAssignToMemberDTO.UserId.ToString());
-
-            if (user is null)
-            {
-                throw new AppException(HttpStatusCode.NotFound, "This user doesn't exist.");
-            }
+            var currentUserId = User.Identity.GetUserId();
 
             var task = await _projectTaskService.GetByIdAsync(projectTaskAssignToMemberDTO.TaskId, cancellationToken);
 
@@ -185,23 +180,65 @@ namespace PMS.WebAPI.Controllers
                 throw new AppException(HttpStatusCode.NotFound, "This task doesn't exist.");
             }
 
-            var isProjectMember = await _projectMemberService.IsProjectMember(user.Id, task.Id, cancellationToken);
+            if (task.OwnerId != currentUserId)
+            {
+                throw new AppException(HttpStatusCode.BadRequest, "You don't have permission to assign this task.");
+            }
+
+            var user = await _userManager.FindByIdAsync(projectTaskAssignToMemberDTO.UserId.ToString());
+
+            if (user is null)
+            {
+                throw new AppException(HttpStatusCode.NotFound, "This user doesn't exist.");
+            }
+
+            var isProjectMember = await _projectMemberService.IsProjectMember(user.Id, task.Project.Id, cancellationToken);
 
             if (!isProjectMember)
             {
                 throw new AppException(HttpStatusCode.BadRequest, "User is not a member of task's project team.");
             }
 
-            var userTask = new UserTask
-            {
-                UserId = projectTaskAssignToMemberDTO.UserId,
-                TaskId = projectTaskAssignToMemberDTO.TaskId,
-                RegisterUserId = User.Identity.GetUserId()
-            };
-
-            await _projectTaskService.AssignProjectTaskToProjectMember(userTask, cancellationToken);
+            await _projectTaskService.AssignProjectTaskToProjectMember(projectTaskAssignToMemberDTO.TaskId, projectTaskAssignToMemberDTO.UserId, currentUserId, cancellationToken);
 
             return new ApiResult(true, ApiResponseStatus.Success, HttpStatusCode.OK, "Task assigned to user successfully.");
+        }
+
+        [HttpPost]
+        [ActionName("UnassignTask")]
+        public async Task<ApiResult> DeleteAssignedUserTask(ProjectTaskAssignToMemberDTO projectTaskAssignToMemberDTO, CancellationToken cancellationToken)
+        {
+            var currentUserId = User.Identity.GetUserId();
+
+            var task = await _projectTaskService.GetByIdAsync(projectTaskAssignToMemberDTO.TaskId, cancellationToken);
+
+            if (task is null)
+            {
+                throw new AppException(HttpStatusCode.NotFound, "This task doesn't exist.");
+            }
+
+            if (task.OwnerId != currentUserId)
+            {
+                throw new AppException(HttpStatusCode.BadRequest, "You don't have permission to unassign this task.");
+            }
+
+            var user = await _userManager.FindByIdAsync(projectTaskAssignToMemberDTO.UserId.ToString());
+
+            if (user is null)
+            {
+                throw new AppException(HttpStatusCode.NotFound, "This user doesn't exist.");
+            }
+
+            var isAssigned = await _projectTaskService.IsAssigned(projectTaskAssignToMemberDTO.UserId, projectTaskAssignToMemberDTO.TaskId, cancellationToken);
+
+            if (!isAssigned)
+            {
+                throw new AppException(HttpStatusCode.BadRequest, "This task didn't assign to this user");
+            }
+
+            await _projectTaskService.DeleteAssignedProjectTask(projectTaskAssignToMemberDTO.TaskId, projectTaskAssignToMemberDTO.UserId, cancellationToken);
+
+            return new ApiResult(true, ApiResponseStatus.Success, HttpStatusCode.OK, "Task unassigned successfully.");
         }
 
         [HttpPost]

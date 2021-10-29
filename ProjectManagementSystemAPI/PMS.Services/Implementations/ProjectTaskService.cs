@@ -21,8 +21,15 @@ namespace PMS.Services.Implementations
             _userTaskRepository = userTaskRepository;
         }
 
-        public async Task AssignProjectTaskToProjectMember(UserTask userTask, CancellationToken cancellationToken)
+        public async Task AssignProjectTaskToProjectMember(int taskId, int userId, int registerUserId, CancellationToken cancellationToken)
         {
+            var userTask = new UserTask()
+            {
+                TaskId = taskId,
+                UserId = userId,
+                RegisterUserId = registerUserId
+            };
+
             await _userTaskRepository.AddAsync(userTask, cancellationToken);
         }
 
@@ -81,6 +88,7 @@ namespace PMS.Services.Implementations
             var tasks = await _projectTaskRepository
                 .TableNoTracking
                 .Where(t => t.OwnerId == userId)
+                .Include(t => t.UserTasks)
                 .ToListAsync(cancellationToken);
 
             return tasks;
@@ -91,6 +99,7 @@ namespace PMS.Services.Implementations
             return await _projectTaskRepository
                 .TableNoTracking
                 .Where(t => t.Id == id)
+                .Include(t => t.Project)
                 .SingleOrDefaultAsync(cancellationToken);
         }
 
@@ -111,12 +120,17 @@ namespace PMS.Services.Implementations
         {
             return await _userTaskRepository
                 .TableNoTracking
-                .AnyAsync(t => t.Id == taskId && t.UserId == userId, cancellationToken);
+                .AnyAsync(t => t.TaskId == taskId && t.UserId == userId, cancellationToken);
         }
 
-        public async Task DeleteAssignedProjectTask(UserTask userTask, CancellationToken cancellationToken)
+        public async Task DeleteAssignedProjectTask(int taskId, int userId, CancellationToken cancellationToken)
         {
-            await _userTaskRepository.DeleteAsync(userTask, cancellationToken);
+            var userTask = await _userTaskRepository.TableNoTracking.Where(ut => ut.TaskId == taskId && ut.UserId == userId).SingleOrDefaultAsync(cancellationToken);
+
+            if (userTask is not null)
+            {
+                await _userTaskRepository.DeleteAsync(userTask, cancellationToken);
+            }
         }
 
         public async Task DeleteAssignedProjectTaskInRange(IEnumerable<UserTask> userTasks, CancellationToken cancellationToken)
@@ -129,6 +143,7 @@ namespace PMS.Services.Implementations
             return await _projectTaskRepository
                 .TableNoTracking
                 .Where(t => t.ProjectId == projectId)
+                .Include(t => t.UserTasks)
                 .ToListAsync(cancellationToken);
         }
     }

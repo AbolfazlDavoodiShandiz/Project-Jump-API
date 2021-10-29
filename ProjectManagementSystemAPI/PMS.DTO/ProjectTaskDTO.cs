@@ -17,5 +17,7 @@ namespace PMS.DTO
         public int OwnerId { get; set; }
         public int ProjectId { get; set; }
         public bool Done { get; set; }
+
+        public ICollection<UserTaskDTO> UserTasks { get; set; }
     }
 }

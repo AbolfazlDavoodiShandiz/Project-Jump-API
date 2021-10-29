@@ -12,4 +12,3 @@ D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSys
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Entities\obj\Debug\net5.0\PMS.Entities.dll
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Entities\obj\Debug\net5.0\ref\PMS.Entities.dll
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Entities\obj\Debug\net5.0\PMS.Entities.pdb
-D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Entities\obj\Debug\net5.0\PMS.Entities.csproj.CopyComplete
