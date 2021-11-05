@@ -2,7 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\ProjectManagementSystemAPI",
-    "\\ProjectManagementSystemAPI\\PMS.DTO",
+    "\\ProjectManagementSystemAPI\\PMS.Services",
+    "\\ProjectManagementSystemAPI\\PMS.Services\\Implementations",
     "\\ProjectManagementSystemAPI\\PMS.WebAPI",
     "\\ProjectManagementSystemAPI\\PMS.WebAPI\\Controllers",
     "\\ProjectManagementSystemAPI\\PMS.WebFramework",
@@ -10,6 +11,6 @@
     "\\ProjectManagementSystemAPI\\PMS.WebFramework\\Configurations",
     "\\ProjectManagementSystemAPI\\PMS.WebFramework\\CustomMiddlewares"
   ],
-  "SelectedNode": "\\ProjectManagementSystemAPI\\ProjectManagementSystemAPI.sln",
+  "SelectedNode": "\\ProjectManagementSystemAPI\\PMS.Services\\Implementations\\ProjectTaskService.cs",
   "PreviewInSolutionExplorer": false
 }

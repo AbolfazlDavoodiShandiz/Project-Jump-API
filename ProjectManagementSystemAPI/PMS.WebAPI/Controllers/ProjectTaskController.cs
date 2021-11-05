@@ -262,5 +262,26 @@ namespace PMS.WebAPI.Controllers
 
             return new ApiResult(true, ApiResponseStatus.Success, HttpStatusCode.OK, "Task marked as done.");
         }
+
+        [HttpGet("{taskId}")]
+        [ActionName("GetTaskAssignedUsers")]
+        public async Task<ApiResult<IEnumerable<string>>> GetTaskAssignedUsers(int taskId, CancellationToken cancellationToken)
+        {
+            var task = await _projectTaskService.GetByIdAsync(taskId, cancellationToken);
+
+            if (task is null)
+            {
+                throw new AppException(HttpStatusCode.NotFound, "This task not found.");
+            }
+
+            var users = await _projectTaskService.GetTaskAssignedUser(taskId, cancellationToken);
+
+            if (users.Count() == 0)
+            {
+                throw new AppException(HttpStatusCode.NotFound, "This task not assigned to anyone.");
+            }
+
+            return Ok(users);
+        }
     }
 }

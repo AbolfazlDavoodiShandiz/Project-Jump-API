@@ -22,5 +22,6 @@ namespace PMS.Services
         Task DeleteAssignedProjectTaskInRange(IEnumerable<UserTask> userTasks, CancellationToken cancellationToken);
         Task MarkAsDone(int taskId, CancellationToken cancellationToken);
         Task<bool> IsAssigned(int userId, int taskId, CancellationToken cancellationToken);
+        Task<IEnumerable<string>> GetTaskAssignedUser(int taskId, CancellationToken cancellationToken);
     }
 }

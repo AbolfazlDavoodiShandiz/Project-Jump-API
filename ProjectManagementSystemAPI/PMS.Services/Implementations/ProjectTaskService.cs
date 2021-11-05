@@ -56,18 +56,22 @@ namespace PMS.Services.Implementations
             if (justCompletedTask && !justIncompletedTasks)
             {
                 tasks = await _userTaskRepository.TableNoTracking
-                    .Where(ut => ut.UserId == userId)
+                    .Where(ut => ut.UserId == userId && ut.ProjectTask.Done)
                     .Include(ut => ut.ProjectTask)
-                    .Where(ut => ut.ProjectTask.Done)
+                    .Include(ut => ut.ProjectTask.Owner)
+                    .Include(ut => ut.ProjectTask.Project)
+                    //.Where(ut => ut.ProjectTask.Done)
                     .Select(ut => ut.ProjectTask)
                     .ToListAsync(cancellationToken);
             }
             else if (justIncompletedTasks && !justCompletedTask)
             {
                 tasks = await _userTaskRepository.TableNoTracking
-                .Where(ut => ut.UserId == userId)
+                .Where(ut => ut.UserId == userId && !ut.ProjectTask.Done)
                 .Include(ut => ut.ProjectTask)
-                .Where(ut => !ut.ProjectTask.Done)
+                .Include(ut => ut.ProjectTask.Owner)
+                .Include(ut => ut.ProjectTask.Project)
+                //.Where(ut => !ut.ProjectTask.Done)
                 .Select(ut => ut.ProjectTask)
                 .ToListAsync(cancellationToken);
             }
@@ -76,6 +80,8 @@ namespace PMS.Services.Implementations
                 tasks = await _userTaskRepository.TableNoTracking
                 .Where(ut => ut.UserId == userId)
                 .Include(ut => ut.ProjectTask)
+                .Include(ut => ut.ProjectTask.Owner)
+                .Include(ut => ut.ProjectTask.Project)
                 .Select(ut => ut.ProjectTask)
                 .ToListAsync(cancellationToken);
             }
@@ -145,6 +151,18 @@ namespace PMS.Services.Implementations
                 .Where(t => t.ProjectId == projectId)
                 .Include(t => t.UserTasks)
                 .ToListAsync(cancellationToken);
+        }
+
+        public async Task<IEnumerable<string>> GetTaskAssignedUser(int taskId, CancellationToken cancellationToken)
+        {
+            var userTask = await _userTaskRepository
+                .TableNoTracking
+                .Where(ut => ut.TaskId == taskId)
+                .Include(ut => ut.User)
+                .Select(ut => ut.User.UserName)
+                .ToListAsync();
+
+            return userTask;
         }
     }
 }

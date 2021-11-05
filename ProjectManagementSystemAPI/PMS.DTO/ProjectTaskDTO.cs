@@ -11,10 +11,12 @@ namespace PMS.DTO
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public DateTime CreatedDate { get;  set; }
+        public DateTime CreatedDate { get; set; }
         public DateTime DeadlineDate { get; set; }
         public DateTime? CompleteDate { get; set; }
+        public string OwnerUsername { get; set; }
         public int OwnerId { get; set; }
+        public string ProjectTitle { get; set; }
         public int ProjectId { get; set; }
         public bool Done { get; set; }
 
