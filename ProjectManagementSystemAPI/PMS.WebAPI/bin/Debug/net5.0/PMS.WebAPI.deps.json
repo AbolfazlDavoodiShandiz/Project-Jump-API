@@ -1642,6 +1642,7 @@
       },
       "PMS.DTO/1.0.0": {
         "dependencies": {
+          "PMS.Common": "1.0.0",
           "System.Security.Claims": "4.3.0"
         },
         "runtime": {

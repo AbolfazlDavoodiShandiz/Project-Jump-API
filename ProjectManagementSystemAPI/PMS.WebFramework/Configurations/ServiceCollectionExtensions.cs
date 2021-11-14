@@ -35,14 +35,16 @@ namespace PMS.WebFramework.Configurations
         }
 
         public static void AddApplicationDependencyInjection(this IServiceCollection services, IConfiguration configuration)
-        {
+        {            
             services.Configure<SiteSettings>(configuration.GetSection(nameof(SiteSettings)));
             services.AddScoped<IAPIService, APIService>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<IProjectTaskService, ProjectTaskService>();
             services.AddScoped<IProjectMemberService, ProjectMemberService>();
+            services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<IJwtService, JwtService>();
+            services.AddHttpContextAccessor();
         }
 
         public static void AddApplicationController(this IServiceCollection services)

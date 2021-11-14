@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PMS.Common.Enums;
 using PMS.Data;
 using PMS.Entities;
 using System;
@@ -13,13 +14,30 @@ namespace PMS.Services.Implementations
     public class ProjectMemberService : IProjectMemberService
     {
         private readonly IRepository<ProjectMember> _projectMemberRepository;
+        private readonly IRepository<Project> _projectRepository;
+        private readonly INotificationService _notificationService;
 
-        public ProjectMemberService(IRepository<ProjectMember> projectMemberRepository)
+        public ProjectMemberService(IRepository<ProjectMember> projectMemberRepository, IRepository<Project> projectRepository, INotificationService notificationService)
         {
             _projectMemberRepository = projectMemberRepository;
+            _projectRepository = projectRepository;
+            _notificationService = notificationService;
         }
 
         public async Task AddProjectMember(ProjectMember projectMember, CancellationToken cancellationToken)
+        {
+            await AddSingleProjectMember(projectMember, cancellationToken);
+        }
+
+        public async Task AddProjectMember(List<ProjectMember> projectMembers, CancellationToken cancellationToken)
+        {
+            foreach (var item in projectMembers)
+            {
+                await AddSingleProjectMember(item, cancellationToken);
+            }
+        }
+
+        private async Task AddSingleProjectMember(ProjectMember projectMember, CancellationToken cancellationToken)
         {
             var exists = await _projectMemberRepository.TableNoTracking
                 .Where(pm => pm.ProjectId == projectMember.ProjectId && pm.UserId == projectMember.UserId)
@@ -28,21 +46,10 @@ namespace PMS.Services.Implementations
             if (!exists)
             {
                 await _projectMemberRepository.AddAsync(projectMember, cancellationToken);
-            }
-        }
 
-        public async Task AddProjectMember(List<ProjectMember> projectMembers, CancellationToken cancellationToken)
-        {
-            foreach (var item in projectMembers)
-            {
-                var exists = await _projectMemberRepository.TableNoTracking
-                    .Where(pm => pm.ProjectId == item.ProjectId && pm.UserId == item.UserId)
-                    .AnyAsync(cancellationToken);
+                var project = await _projectRepository.GetByIdAsync(cancellationToken, projectMember.ProjectId);
 
-                if (!exists)
-                {
-                    await _projectMemberRepository.AddAsync(item, cancellationToken);
-                }
+                await _notificationService.Create(projectMember.UserId, NotificationType.AddProjectMember, project.Title, project.Id, cancellationToken);
             }
         }
 

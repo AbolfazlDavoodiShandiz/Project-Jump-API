@@ -10,3 +10,5 @@ D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSys
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.DTO\obj\Debug\net5.0\PMS.DTO.dll
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.DTO\obj\Debug\net5.0\ref\PMS.DTO.dll
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.DTO\obj\Debug\net5.0\PMS.DTO.pdb
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.DTO\bin\Debug\net5.0\PMS.Common.dll
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.DTO\bin\Debug\net5.0\PMS.Common.pdb

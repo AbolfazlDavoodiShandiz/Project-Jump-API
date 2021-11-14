@@ -120,6 +120,44 @@ namespace PMS.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("PMS.Entities.Notification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CreatedUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedUsername")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("NotificationType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RecieverUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RelatedObjectId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RelatedObjectTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecieverUserId");
+
+                    b.ToTable("Notifications");
+                });
+
             modelBuilder.Entity("PMS.Entities.Project", b =>
                 {
                     b.Property<int>("Id")
@@ -413,6 +451,17 @@ namespace PMS.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("PMS.Entities.Notification", b =>
+                {
+                    b.HasOne("PMS.Entities.User", "RecieverUser")
+                        .WithMany("Notifications")
+                        .HasForeignKey("RecieverUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("RecieverUser");
+                });
+
             modelBuilder.Entity("PMS.Entities.Project", b =>
                 {
                     b.HasOne("PMS.Entities.User", "Owner")
@@ -495,6 +544,8 @@ namespace PMS.Data.Migrations
 
             modelBuilder.Entity("PMS.Entities.User", b =>
                 {
+                    b.Navigation("Notifications");
+
                     b.Navigation("ProjectMembers");
 
                     b.Navigation("Projects");

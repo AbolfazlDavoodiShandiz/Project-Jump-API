@@ -2001,6 +2001,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
+          "PMS.Common": "1.0.0",
           "System.Security.Claims": "4.3.0"
         },
         "compile": {

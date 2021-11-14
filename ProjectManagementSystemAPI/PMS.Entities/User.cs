@@ -28,6 +28,7 @@ namespace PMS.Entities
         public ICollection<ProjectTask> Tasks { get; set; }
         public ICollection<UserTask> UserTasks { get; set; }
         public ICollection<ProjectMember> ProjectMembers { get; set; }
+        public ICollection<Notification> Notifications { get; set; }
     }
 
     public class UserConfiguration : IEntityTypeConfiguration<User>
@@ -38,6 +39,7 @@ namespace PMS.Entities
             builder.HasMany(u => u.Tasks).WithOne(pt => pt.Owner).HasForeignKey(pt => pt.OwnerId);
             builder.HasMany(u => u.UserTasks).WithOne(ut => ut.User).HasForeignKey(ut => ut.UserId);
             builder.HasMany(u => u.ProjectMembers).WithOne(pt => pt.User).HasForeignKey(pt => pt.UserId);
+            builder.HasMany(u => u.Notifications).WithOne(n => n.RecieverUser).HasForeignKey(n => n.RecieverUserId);
         }
     }
 }

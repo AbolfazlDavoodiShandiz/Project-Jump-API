@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "GPbTsTxxxFCvuwyiytYcbMfwdVkbFwVtDIhCkT4szFiTZbAZjHI/5eqJffsMKg9Q6emMAdGFcVHqP2efittUtA==",
+  "dgSpecHash": "eKeg2mkOl4OHK50x2DEDrytCLvgEird8nYHD/2mNgrAeD4z7ooOD53dc/3jxaWv1hK56MHis5MTwr7OrdAuKVQ==",
   "success": true,
   "projectFilePath": "D:\\Programming\\Projects\\GitHubRepositories\\Project-Jump-API\\ProjectManagementSystemAPI\\PMS.DTO\\PMS.DTO.csproj",
   "expectedPackageFiles": [
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
+    "C:\\Users\\Abolfazl\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.globalization\\4.3.0\\system.globalization.4.3.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.io\\4.3.0\\system.io.4.3.0.nupkg.sha512",

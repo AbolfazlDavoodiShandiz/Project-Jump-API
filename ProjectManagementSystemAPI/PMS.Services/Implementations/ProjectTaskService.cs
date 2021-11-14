@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PMS.Common.Enums;
 using PMS.Data;
 using PMS.Entities;
 using System;
@@ -14,23 +15,37 @@ namespace PMS.Services.Implementations
     {
         private readonly IRepository<ProjectTask> _projectTaskRepository;
         private readonly IRepository<UserTask> _userTaskRepository;
+        private readonly INotificationService _notificationService;
 
-        public ProjectTaskService(IRepository<ProjectTask> projectTaskRepository, IRepository<UserTask> userTaskRepository)
+        public ProjectTaskService(IRepository<ProjectTask> projectTaskRepository, IRepository<UserTask> userTaskRepository, INotificationService notificationService)
         {
             _projectTaskRepository = projectTaskRepository;
             _userTaskRepository = userTaskRepository;
+            _notificationService = notificationService;
         }
 
         public async Task AssignProjectTaskToProjectMember(int taskId, int userId, int registerUserId, CancellationToken cancellationToken)
         {
-            var userTask = new UserTask()
-            {
-                TaskId = taskId,
-                UserId = userId,
-                RegisterUserId = registerUserId
-            };
+            var exist = await _userTaskRepository
+                .TableNoTracking
+                .Where(ut => ut.UserId == userId && ut.TaskId == taskId)
+                .AnyAsync(cancellationToken);
 
-            await _userTaskRepository.AddAsync(userTask, cancellationToken);
+            if (!exist)
+            {
+                var userTask = new UserTask()
+                {
+                    TaskId = taskId,
+                    UserId = userId,
+                    RegisterUserId = registerUserId
+                };
+
+                await _userTaskRepository.AddAsync(userTask, cancellationToken);
+
+                var task = await _projectTaskRepository.GetByIdAsync(cancellationToken, userTask.TaskId);
+
+                await _notificationService.Create(userId, NotificationType.AssignTask, task.Title, task.Id, cancellationToken);
+            }
         }
 
         public async Task CreateProjectTask(ProjectTask projectTask, CancellationToken cancellationToken)

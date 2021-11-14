@@ -42,6 +42,8 @@ namespace PMS.WebFramework.AutoMapperProfile
                 {
                     opt.MapFrom(pms => pms.PhoneNumber);
                 }).ReverseMap();
+
+            CreateMap<Notification, NotificationDTO>().ReverseMap();
         }
     }
 }
