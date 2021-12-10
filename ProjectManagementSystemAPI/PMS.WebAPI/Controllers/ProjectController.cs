@@ -95,6 +95,11 @@ namespace PMS.WebAPI.Controllers
                 throw new AppException(HttpStatusCode.NotFound, "There is no project with this data.");
             }
 
+            if (project.OwnerId != userId)
+            {
+                throw new AppException(HttpStatusCode.BadRequest, "You are not the owner of this project.");
+            }
+
             project.Description = string.IsNullOrWhiteSpace(projectEditDTO.Description) ? project.Description : projectEditDTO.Description;
             project.DeadlineDate = projectEditDTO.DeadlineDate.HasValue ? projectEditDTO.DeadlineDate.Value : project.DeadlineDate;
 
@@ -115,44 +120,31 @@ namespace PMS.WebAPI.Controllers
                 throw new AppException(HttpStatusCode.NotFound, "There is no project with this data.");
             }
 
+            if (project.OwnerId != userId)
+            {
+                throw new AppException(HttpStatusCode.BadRequest, "You are not the owner of this project.");
+            }
+
             await _projectService.DeleteProject(project, cancellationToken);
 
             return new ApiResult(true, ApiResponseStatus.Success, HttpStatusCode.OK, "Project deleted successfully.");
-        }
-
-        [HttpPost]
-        [ActionName("RegisterProjectMember")]
-        public async Task<ApiResult> RegisterProjectMember(ProjectMemberAddNewDTO projectMemberAddNewDTO, CancellationToken cancellationToken)
-        {
-            var member = await _userManager.FindByEmailAsync(projectMemberAddNewDTO.MemberEmail);
-
-            if (member is not null)
-            {
-                var projectMember = new ProjectMember
-                {
-                    UserId = member.Id,
-                    ProjectId = projectMemberAddNewDTO.ProjectId
-                };
-
-                await _projectMemberService.AddProjectMember(projectMember, cancellationToken);
-
-                return new ApiResult(true, ApiResponseStatus.Success, HttpStatusCode.OK, "Project member added sucessfully.");
-            }
-            else
-            {
-                throw new AppException(HttpStatusCode.NotFound, "This user email doesn't exist.There is no user with this email.");
-            }
         }
 
         [HttpGet("{projectTitle}")]
         [ActionName("GetProjectSummary")]
         public async Task<ApiResult<ProjectSummaryDTO>> GetProjectSummary(string projectTitle, CancellationToken cancellationToken)
         {
+            var userId = User.Identity.GetUserId();
             var project = await _projectService.Get(projectTitle, cancellationToken);
 
             if (project is null)
             {
                 throw new AppException(HttpStatusCode.NotFound, "Project not found.");
+            }
+
+            if (project.OwnerId != userId)
+            {
+                throw new AppException(HttpStatusCode.BadRequest, "You are not the owner of this project.");
             }
 
             var projectTasks = await _projectTaskService.GetAllByProjectId(project.Id, cancellationToken);
@@ -241,11 +233,17 @@ namespace PMS.WebAPI.Controllers
                 throw new AppException(HttpStatusCode.BadRequest, "There is no data from client.");
             }
 
-            var projectExists = await _projectService.ExistsById(projectMemberRegisterDTO[0].ProjectId, cancellationToken);
+            var userId = User.Identity.GetUserId();
+            var project = await _projectService.Get(projectMemberRegisterDTO[0].ProjectId, cancellationToken);
 
-            if (!projectExists)
+            if (project is null)
             {
                 throw new AppException(HttpStatusCode.NotFound, "Project not found.");
+            }
+
+            if (project.OwnerId != userId)
+            {
+                throw new AppException(HttpStatusCode.BadRequest, "You are not the owner of this project.");
             }
 
             var memberList = new List<ProjectMember>();
@@ -281,9 +279,16 @@ namespace PMS.WebAPI.Controllers
                 throw new AppException(HttpStatusCode.NotFound, "No project found.");
             }
 
+            var userId = User.Identity.GetUserId();
+
+            if (project.OwnerId != userId)
+            {
+                throw new AppException(HttpStatusCode.BadRequest, "You are not the owner of this project.");
+            }
+
             var user = await _userManager.FindByEmailAsync(projectMemberDeleteDTO.UserEmail);
 
-            if (project is null)
+            if (user is null)
             {
                 throw new AppException(HttpStatusCode.NotFound, "No user found.");
             }
