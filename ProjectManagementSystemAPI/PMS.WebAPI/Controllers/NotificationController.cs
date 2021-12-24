@@ -27,6 +27,19 @@ namespace PMS.WebAPI.Controllers
         }
 
         [HttpGet]
+        [ActionName("GetAllNotifications")]
+        public async Task<ApiResult<IEnumerable<NotificationDTO>>> GetAllNotifications(CancellationToken cancellationToken)
+        {
+            var userId = User.Identity.GetUserId();
+
+            var notifications = await _notificationService.GetAll(userId, cancellationToken, false);
+
+            var mappedNotifications = _mapper.Map<IEnumerable<NotificationDTO>>(notifications);
+
+            return Ok(mappedNotifications);
+        }
+
+        [HttpGet]
         [ActionName("GetUnreadNotifications")]
         public async Task<ApiResult<IEnumerable<NotificationDTO>>> GetUnreadNotifications(CancellationToken cancellationToken)
         {
@@ -37,6 +50,17 @@ namespace PMS.WebAPI.Controllers
             var mappedNotifications = _mapper.Map<IEnumerable<NotificationDTO>>(notifications);
 
             return Ok(mappedNotifications);
+        }
+
+        [HttpPost]
+        [ActionName("MarkAsRead")]
+        public async Task<ApiResult> MarkAsRead(EntityIdsDTO entityIdsDTO, CancellationToken cancellationToken)
+        {
+            var userId = User.Identity.GetUserId();
+
+            await _notificationService.MarkAsRead(entityIdsDTO.IdList, cancellationToken);
+
+            return Ok();
         }
     }
 }

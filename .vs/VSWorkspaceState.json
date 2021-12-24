@@ -11,6 +11,6 @@
     "\\ProjectManagementSystemAPI\\PMS.WebFramework\\Configurations",
     "\\ProjectManagementSystemAPI\\PMS.WebFramework\\CustomMiddlewares"
   ],
-  "SelectedNode": "\\ProjectManagementSystemAPI\\PMS.WebAPI\\Controllers\\AccountController.cs",
+  "SelectedNode": "\\ProjectManagementSystemAPI\\PMS.WebAPI\\Controllers\\ProjectController.cs",
   "PreviewInSolutionExplorer": false
 }

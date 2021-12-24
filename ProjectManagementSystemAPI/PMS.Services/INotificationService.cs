@@ -13,6 +13,6 @@ namespace PMS.Services
     {
         Task Create(int recieverUserId, NotificationType notificationType, string relatedObjectTitle, int relatedObjectId, CancellationToken cancellationToken);
         Task<IEnumerable<Notification>> GetAll(int userId, CancellationToken cancellationToken, bool justUnread = true);
-        Task MarkAsRead(int Id, CancellationToken cancellationToken);
+        Task MarkAsRead(IEnumerable<int> idList, CancellationToken cancellationToken);
     }
 }

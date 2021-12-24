@@ -61,17 +61,17 @@ namespace PMS.Services.Implementations
             }
         }
 
-        public async Task MarkAsRead(int Id, CancellationToken cancellationToken)
+        public async Task MarkAsRead(IEnumerable<int> idList, CancellationToken cancellationToken)
         {
-            var notification = await _notificationRepository
+            var notifications = await _notificationRepository
                 .TableNoTracking
-                .Where(n => n.Id == Id)
-                .SingleOrDefaultAsync(cancellationToken);
+                .Where(n => idList.Contains(n.Id))
+                .ToListAsync(cancellationToken);
 
-            notification.IsRead = true;
+            notifications.ForEach(n => n.IsRead=true);
 
             await _notificationRepository
-                .UpdateAsync(notification, cancellationToken);
+                .UpdateRangeAsync(notifications, cancellationToken);
         }
     }
 }
