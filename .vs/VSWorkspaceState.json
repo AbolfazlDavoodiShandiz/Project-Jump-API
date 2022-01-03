@@ -7,10 +7,11 @@
     "\\ProjectManagementSystemAPI\\PMS.WebAPI",
     "\\ProjectManagementSystemAPI\\PMS.WebAPI\\Controllers",
     "\\ProjectManagementSystemAPI\\PMS.WebFramework",
+    "\\ProjectManagementSystemAPI\\PMS.WebFramework\\ApplicationHubs",
     "\\ProjectManagementSystemAPI\\PMS.WebFramework\\AutoMapperProfile",
     "\\ProjectManagementSystemAPI\\PMS.WebFramework\\Configurations",
     "\\ProjectManagementSystemAPI\\PMS.WebFramework\\CustomMiddlewares"
   ],
-  "SelectedNode": "\\ProjectManagementSystemAPI\\PMS.WebAPI\\Controllers\\ProjectController.cs",
+  "SelectedNode": "\\ProjectManagementSystemAPI\\PMS.WebFramework\\ApplicationHubs\\NotificationHub.cs",
   "PreviewInSolutionExplorer": false
 }

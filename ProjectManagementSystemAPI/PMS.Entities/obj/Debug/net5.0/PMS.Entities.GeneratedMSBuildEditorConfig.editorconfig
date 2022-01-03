@@ -7,4 +7,4 @@ build_property.PublishSingleFile =
 build_property.IncludeAllContentForSelfExtract = 
 build_property._SupportedPlatformList = Android,iOS,Linux,macOS,Windows
 build_property.RootNamespace = PMS.Entities
-build_property.ProjectDir = d:\programming\projects\githubrepositories\project-jump-api\projectmanagementsystemapi\PMS.Entities\
+build_property.ProjectDir = D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Entities\

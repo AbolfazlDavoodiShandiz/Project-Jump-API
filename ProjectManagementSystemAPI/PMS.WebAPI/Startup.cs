@@ -20,6 +20,7 @@ using PMS.Data.Repositories;
 using PMS.Entities;
 using PMS.Services;
 using PMS.Services.Implementations;
+using PMS.WebFramework.ApplicationHubs;
 using PMS.WebFramework.AutoMapperProfile;
 using PMS.WebFramework.Configurations;
 using PMS.WebFramework.CustomMiddlewares;
@@ -56,6 +57,13 @@ namespace PMS.WebAPI
             services.AddApplicationController();
             services.AddIdentity(Configuration);
             services.AddSwagger();
+            services.AddSignalR();
+
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration=Configuration.GetConnectionString("RedisConnectionString");
+                options.InstanceName="PMS_API_";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,6 +72,8 @@ namespace PMS.WebAPI
             app.UseCors("PMS_API");
 
             app.UseMiddleware<CustomExceptionHandlerMiddleware>();
+
+            app.UseAuthentication();
 
             if (env.IsDevelopment())
             {
@@ -80,12 +90,11 @@ namespace PMS.WebAPI
 
             app.UseRouting();
 
-            app.UseAuthentication();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<NotificationHub>("/hubs/notificationhub");
                 endpoints.MapControllers();
             });
         }

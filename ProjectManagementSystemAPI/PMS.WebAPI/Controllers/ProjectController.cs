@@ -2,12 +2,14 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using PMS.Common.Enums;
 using PMS.Common.Utility;
 using PMS.DTO;
 using PMS.Entities;
 using PMS.Services;
 using PMS.WebFramework.API;
+using PMS.WebFramework.ApplicationHubs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,14 +28,17 @@ namespace PMS.WebAPI.Controllers
         private readonly IProjectTaskService _projectTaskService;
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
+        private readonly IHubContext<NotificationHub> _hubContext;
 
-        public ProjectController(IProjectService projectService, IProjectMemberService projectMemberService, IProjectTaskService projectTaskService, UserManager<User> userManager, IMapper mapper)
+        public ProjectController(IProjectService projectService, IProjectMemberService projectMemberService, IProjectTaskService projectTaskService, UserManager<User> userManager,
+            IMapper mapper, IHubContext<NotificationHub> hubContext)
         {
             _projectService = projectService;
             _projectMemberService = projectMemberService;
             _projectTaskService = projectTaskService;
             _userManager = userManager;
             _mapper = mapper;
+            _hubContext=hubContext;
         }
 
         [HttpPost]
@@ -60,6 +65,8 @@ namespace PMS.WebAPI.Controllers
             };
 
             await _projectMemberService.AddProjectMember(projectMember, cancellationToken);
+
+            await _hubContext.Clients.All.SendAsync("notification", $"{DateTime.Now} - {User.Identity.Name} created a new project.");
 
             return new ApiResult(true, ApiResponseStatus.Success, HttpStatusCode.OK, "Project created successfully.");
         }
