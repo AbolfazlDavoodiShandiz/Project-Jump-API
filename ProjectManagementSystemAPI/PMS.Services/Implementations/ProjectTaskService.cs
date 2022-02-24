@@ -45,6 +45,8 @@ namespace PMS.Services.Implementations
                 var task = await _projectTaskRepository.GetByIdAsync(cancellationToken, userTask.TaskId);
 
                 await _notificationService.Create(userId, NotificationType.AssignTask, task.Title, task.Id, cancellationToken);
+
+
             }
         }
 

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PMS.Services.Utility
+namespace PMS.Services.Caching
 {
     public static class RedisCacheExtensions
     {
@@ -18,7 +18,7 @@ namespace PMS.Services.Utility
         {
             var options = new DistributedCacheEntryOptions();
 
-            options.AbsoluteExpirationRelativeToNow=absoluteExpireTime??TimeSpan.FromSeconds(600);
+            options.AbsoluteExpirationRelativeToNow=absoluteExpireTime??TimeSpan.FromSeconds(3600);
             options.SlidingExpiration=unusedExpireTime;
 
             var jsonData = JsonConvert.SerializeObject(data);

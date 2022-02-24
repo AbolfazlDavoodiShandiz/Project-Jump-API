@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
 using PMS.Common;
 using PMS.Common.Enums;
@@ -30,15 +31,18 @@ namespace PMS.WebAPI.Controllers
         private readonly IJwtService _jwtService;
         private readonly SiteSettings _siteSettings;
         private readonly IMapper _mapper;
+        private readonly IDistributedCache _cache;
 
         public AccountController(SignInManager<User> signInManager, UserManager<User> userManager,
-            IJwtService jwtServices, IOptionsSnapshot<SiteSettings> siteSettings, IMapper mapper)
+            IJwtService jwtServices, IOptionsSnapshot<SiteSettings> siteSettings, IMapper mapper,
+            IDistributedCache cache)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _jwtService = jwtServices;
             _siteSettings = siteSettings.Value;
             _mapper = mapper;
+            _cache = cache;
         }
 
         [HttpPost]
@@ -50,7 +54,7 @@ namespace PMS.WebAPI.Controllers
             {
                 Email = userRegistrationDTO.Email,
                 UserName = userRegistrationDTO.Username,
-                PhoneNumber=userRegistrationDTO.Mobile
+                PhoneNumber = userRegistrationDTO.Mobile
             };
 
             var result = await _userManager.CreateAsync(user, userRegistrationDTO.Password);
@@ -121,6 +125,9 @@ namespace PMS.WebAPI.Controllers
             user.LastTokenExpireDate = null;
 
             await _userManager.UpdateAsync(user);
+
+            string userCacheKey = $"UserId_{user.Id}";
+            await _cache.RemoveAsync(userCacheKey);
 
             return new ApiResult(true, ApiResponseStatus.Success, HttpStatusCode.OK, "User logged out successfully.");
         }

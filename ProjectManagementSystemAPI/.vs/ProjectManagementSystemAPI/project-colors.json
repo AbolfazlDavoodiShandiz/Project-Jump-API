@@ -1,0 +1,26 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "6ca907d6-7d67-415f-a8bd-555457a34e09": {
+      "ProjectGuid": "6ca907d6-7d67-415f-a8bd-555457a34e09",
+      "DisplayName": "PMS.WebAPI",
+      "ColorIndex": 0
+    },
+    "50c85e55-e841-4750-a973-273277c560b8": {
+      "ProjectGuid": "50c85e55-e841-4750-a973-273277c560b8",
+      "DisplayName": "PMS.DTO",
+      "ColorIndex": 1
+    },
+    "7ab35202-70e2-4537-8606-c1ac396b039e": {
+      "ProjectGuid": "7ab35202-70e2-4537-8606-c1ac396b039e",
+      "DisplayName": "PMS.Services",
+      "ColorIndex": 2
+    },
+    "122518dc-4971-403e-ab83-2cab9407340f": {
+      "ProjectGuid": "122518dc-4971-403e-ab83-2cab9407340f",
+      "DisplayName": "PMS.WebFramework",
+      "ColorIndex": 3
+    }
+  },
+  "NextColorIndex": 4
+}

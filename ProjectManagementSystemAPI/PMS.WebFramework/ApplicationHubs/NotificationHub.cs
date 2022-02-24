@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Caching.Distributed;
-using PMS.Services.Utility;
+using PMS.DTO;
+using PMS.Services.Caching;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,16 +19,45 @@ namespace PMS.WebFramework.ApplicationHubs
 
         public NotificationHub(IDistributedCache cache)
         {
-            _cache=cache;
+            _cache = cache;
         }
 
         public override async Task OnConnectedAsync()
         {
             Debug.WriteLine($"ConnectionId: {Context.ConnectionId} - UserIdentifier: {Context.UserIdentifier}");
 
-            await _cache.SetRecordAsync<int>($"ConnectionId_{Context.ConnectionId}", 1);
+            string recordId = $"UserId_{Context.UserIdentifier}";
+            var record = await _cache.GetRecordAsync<UserHubConnections>(recordId);
+            var obj = new UserHubConnections();
 
-            return;
+            if (record != null)
+            {
+                await _cache.RemoveAsync(recordId);
+            }
+
+            obj = new UserHubConnections
+            {
+                UserId = int.Parse(Context.UserIdentifier),
+                Connections = new List<string>() { Context.ConnectionId }
+            };
+
+            await _cache.SetRecordAsync(recordId, obj);
+        }
+
+        public override async Task OnDisconnectedAsync(Exception exception)
+        {
+            string recordId = $"UserId_{Context.UserIdentifier}";
+            var record = await _cache.GetRecordAsync<UserHubConnections>(recordId);
+
+            if (record != null)
+            {
+                await _cache.RemoveAsync(recordId);
+            }
+        }
+
+        public void SendMessage(string message)
+        {
+
         }
     }
 }
