@@ -10,7 +10,7 @@ namespace PMS.Services.Implementations
     {
         public string APISimpleInfo()
         {
-            return "This is a simple project management API.";
+            return "This is a simple project management API.This messages indicates you are connected to API successfully.";
         }
     }
 }

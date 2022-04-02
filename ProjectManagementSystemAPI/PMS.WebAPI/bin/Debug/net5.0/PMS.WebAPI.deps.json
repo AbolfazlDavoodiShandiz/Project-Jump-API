@@ -1883,8 +1883,10 @@
       "PMS.Services/1.0.0": {
         "dependencies": {
           "Microsoft.AspNetCore.Identity": "2.2.0",
+          "Microsoft.AspNetCore.SignalR": "1.1.0",
           "Microsoft.Extensions.Caching.StackExchangeRedis": "6.0.1",
           "Newtonsoft.Json": "13.0.1",
+          "PMS.DTO": "1.0.0",
           "PMS.Data": "1.0.0",
           "StackExchange.Redis": "2.2.88"
         },
@@ -1901,7 +1903,6 @@
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "8.1.1",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "5.0.9",
           "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "5.0.9",
-          "Microsoft.AspNetCore.SignalR": "1.1.0",
           "PMS.DTO": "1.0.0",
           "PMS.Services": "1.0.0",
           "Swashbuckle.AspNetCore": "5.6.3"

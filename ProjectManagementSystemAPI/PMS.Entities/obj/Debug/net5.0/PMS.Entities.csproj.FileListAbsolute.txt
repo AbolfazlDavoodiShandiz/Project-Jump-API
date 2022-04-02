@@ -1,6 +1,5 @@
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Entities\bin\Debug\net5.0\PMS.Entities.deps.json
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Entities\bin\Debug\net5.0\PMS.Entities.dll
-D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Entities\bin\Debug\net5.0\ref\PMS.Entities.dll
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Entities\bin\Debug\net5.0\PMS.Entities.pdb
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Entities\bin\Debug\net5.0\PMS.Common.dll
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Entities\bin\Debug\net5.0\PMS.Common.pdb
@@ -13,3 +12,4 @@ D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSys
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Entities\obj\Debug\net5.0\ref\PMS.Entities.dll
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Entities\obj\Debug\net5.0\PMS.Entities.pdb
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Entities\obj\Debug\net5.0\PMS.Entities.csproj.CopyComplete
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Entities\obj\Debug\net5.0\refint\PMS.Entities.dll

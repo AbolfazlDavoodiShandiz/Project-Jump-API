@@ -28,10 +28,10 @@ namespace PMS.WebAPI.Controllers
         private readonly IProjectTaskService _projectTaskService;
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
-        private readonly IHubContext<NotificationHub> _hubContext;
+        private readonly IHubContext<ApplicationHub> _hubContext;
 
         public ProjectController(IProjectService projectService, IProjectMemberService projectMemberService, IProjectTaskService projectTaskService, UserManager<User> userManager,
-            IMapper mapper, IHubContext<NotificationHub> hubContext)
+            IMapper mapper, IHubContext<ApplicationHub> hubContext)
         {
             _projectService = projectService;
             _projectMemberService = projectMemberService;

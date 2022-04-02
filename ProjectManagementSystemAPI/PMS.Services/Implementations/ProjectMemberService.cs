@@ -49,7 +49,7 @@ namespace PMS.Services.Implementations
 
                 var project = await _projectRepository.GetByIdAsync(cancellationToken, projectMember.ProjectId);
 
-                await _notificationService.Create(projectMember.UserId, NotificationType.AddProjectMember, project.Title, project.Id, cancellationToken);
+                await _notificationService.CreateNotificationInDB(projectMember.UserId, NotificationType.AddProjectMember, project.Title, project.Id, cancellationToken);
             }
         }
 

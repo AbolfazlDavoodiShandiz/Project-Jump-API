@@ -1,6 +1,5 @@
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Services\bin\Debug\net5.0\PMS.Services.deps.json
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Services\bin\Debug\net5.0\PMS.Services.dll
-D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Services\bin\Debug\net5.0\ref\PMS.Services.dll
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Services\bin\Debug\net5.0\PMS.Services.pdb
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Services\bin\Debug\net5.0\PMS.Common.dll
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Services\bin\Debug\net5.0\PMS.Data.dll
@@ -17,3 +16,6 @@ D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSys
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Services\obj\Debug\net5.0\ref\PMS.Services.dll
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Services\obj\Debug\net5.0\PMS.Services.pdb
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Services\obj\Debug\net5.0\PMS.Services.csproj.CopyComplete
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Services\bin\Debug\net5.0\PMS.DTO.dll
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Services\bin\Debug\net5.0\PMS.DTO.pdb
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Services\obj\Debug\net5.0\refint\PMS.Services.dll

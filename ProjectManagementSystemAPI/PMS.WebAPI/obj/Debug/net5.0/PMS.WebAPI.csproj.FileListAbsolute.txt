@@ -5,7 +5,6 @@ D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSys
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.WebAPI\bin\Debug\net5.0\PMS.WebAPI.runtimeconfig.json
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.WebAPI\bin\Debug\net5.0\PMS.WebAPI.runtimeconfig.dev.json
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.WebAPI\bin\Debug\net5.0\PMS.WebAPI.dll
-D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.WebAPI\bin\Debug\net5.0\ref\PMS.WebAPI.dll
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.WebAPI\bin\Debug\net5.0\PMS.WebAPI.pdb
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.WebAPI\bin\Debug\net5.0\Microsoft.OpenApi.dll
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.WebAPI\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
@@ -93,3 +92,4 @@ D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSys
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.WebAPI\bin\Debug\net5.0\System.Diagnostics.PerformanceCounter.dll
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.WebAPI\bin\Debug\net5.0\System.Runtime.CompilerServices.Unsafe.dll
 D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.WebAPI\bin\Debug\net5.0\runtimes\win\lib\netcoreapp2.0\System.Diagnostics.PerformanceCounter.dll
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.WebAPI\obj\Debug\net5.0\refint\PMS.WebAPI.dll

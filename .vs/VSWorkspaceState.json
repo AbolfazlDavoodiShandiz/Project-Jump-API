@@ -12,6 +12,6 @@
     "\\ProjectManagementSystemAPI\\PMS.WebFramework\\Configurations",
     "\\ProjectManagementSystemAPI\\PMS.WebFramework\\CustomMiddlewares"
   ],
-  "SelectedNode": "\\ProjectManagementSystemAPI\\PMS.WebFramework\\ApplicationHubs\\NotificationHub.cs",
+  "SelectedNode": "\\ProjectManagementSystemAPI\\PMS.WebAPI\\Startup.cs",
   "PreviewInSolutionExplorer": false
 }

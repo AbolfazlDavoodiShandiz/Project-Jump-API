@@ -11,8 +11,9 @@ namespace PMS.Services
 {
     public interface INotificationService
     {
-        Task Create(int recieverUserId, NotificationType notificationType, string relatedObjectTitle, int relatedObjectId, CancellationToken cancellationToken);
+        Task CreateNotificationInDB(int recieverUserId, NotificationType notificationType, string relatedObjectTitle, int relatedObjectId, CancellationToken cancellationToken);
         Task<IEnumerable<Notification>> GetAll(int userId, CancellationToken cancellationToken, bool justUnread = true);
         Task MarkAsRead(IEnumerable<int> idList, CancellationToken cancellationToken);
+        Task SendRealTimeNotification(int userId, string text);
     }
 }

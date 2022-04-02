@@ -94,7 +94,7 @@ namespace PMS.WebAPI
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<NotificationHub>("/hubs/notificationhub");
+                endpoints.MapHub<ApplicationHub>("/hubs/notificationhub");
                 endpoints.MapControllers();
             });
         }

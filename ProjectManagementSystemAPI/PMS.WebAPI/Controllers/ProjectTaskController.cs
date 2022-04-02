@@ -29,18 +29,14 @@ namespace PMS.WebAPI.Controllers
         private readonly IProjectMemberService _projectMemberService;
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
-        private readonly IHubContext<NotificationHub> _hubContext;
-        private readonly IDistributedCache _cache;
 
         public ProjectTaskController(IProjectTaskService projectTaskService, IProjectMemberService projectMemberService,
-            UserManager<User> userManager, IMapper mapper, IHubContext<NotificationHub> hubContext,IDistributedCache cache)
+            UserManager<User> userManager, IMapper mapper)
         {
             _projectTaskService = projectTaskService;
             _projectMemberService = projectMemberService;
             _userManager = userManager;
             _mapper = mapper;
-            _hubContext = hubContext;
-            _cache = cache;
         }
 
         [HttpPost]
@@ -209,17 +205,6 @@ namespace PMS.WebAPI.Controllers
             }
 
             await _projectTaskService.AssignProjectTaskToProjectMember(projectTaskAssignToMemberDTO.TaskId, projectTaskAssignToMemberDTO.UserId, currentUserId, cancellationToken);
-
-            string userCacheKey = $"UserId_{user.Id}";
-            var record = await _cache.GetRecordAsync<UserHubConnections>(userCacheKey);
-
-            if (record != null)
-            {
-                foreach(string connectionId in record.Connections)
-                {
-                    await _hubContext.Clients.Client(connectionId).SendAsync("notification", $"{DateTime.Now} - A new task assigned to you.");
-                }
-            }
          
             return new ApiResult(true, ApiResponseStatus.Success, HttpStatusCode.OK, "Task assigned to user successfully.");
         }

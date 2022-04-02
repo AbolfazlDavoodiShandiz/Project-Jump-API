@@ -1,0 +1,15 @@
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Entities\bin\Release\net5.0\PMS.Entities.deps.json
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Entities\bin\Release\net5.0\PMS.Entities.dll
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Entities\bin\Release\net5.0\PMS.Entities.pdb
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Entities\bin\Release\net5.0\PMS.Common.dll
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Entities\bin\Release\net5.0\PMS.Common.pdb
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Entities\obj\Release\net5.0\PMS.Entities.csproj.AssemblyReference.cache
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Entities\obj\Release\net5.0\PMS.Entities.GeneratedMSBuildEditorConfig.editorconfig
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Entities\obj\Release\net5.0\PMS.Entities.AssemblyInfoInputs.cache
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Entities\obj\Release\net5.0\PMS.Entities.AssemblyInfo.cs
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Entities\obj\Release\net5.0\PMS.Entities.csproj.CoreCompileInputs.cache
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Entities\obj\Release\net5.0\PMS.Entities.csproj.CopyComplete
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Entities\obj\Release\net5.0\PMS.Entities.dll
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Entities\obj\Release\net5.0\refint\PMS.Entities.dll
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Entities\obj\Release\net5.0\PMS.Entities.pdb
+D:\Programming\Projects\GitHubRepositories\Project-Jump-API\ProjectManagementSystemAPI\PMS.Entities\obj\Release\net5.0\ref\PMS.Entities.dll
